@@ -8,7 +8,6 @@ function GoogleButton() {
   const [loading, setLoading] = React.useState(false);
   return (
     <Button
-      variant={"outline"}
       size={"lg"}
       className="text-base "
       onClick={() => signIn("google", { callbackUrl: "/app" })}

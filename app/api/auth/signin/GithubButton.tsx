@@ -8,9 +8,8 @@ function GithubButton() {
   const [loading, setLoading] = React.useState(false);
   return (
     <Button
-      variant={"outline"}
       size={"lg"}
-      className="  text-base "
+      className="  text-base  "
       onClick={() => {
         setLoading(true);
         signIn("github", { callbackUrl: "/app" });
