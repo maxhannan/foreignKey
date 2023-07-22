@@ -6,7 +6,7 @@ import { ModeToggle } from "./DarkModeToggle";
 import MobileMenu from "./MobileMenu";
 import { getUserByEmail } from "@/lib/user.server";
 import UserMenu from "./UserMenu";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 interface Props {}
 
