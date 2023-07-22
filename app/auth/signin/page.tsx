@@ -3,7 +3,7 @@ import GithubButton from "./GithubButton";
 import Google from "next-auth/providers/google";
 import GoogleButton from "./GoogleButton";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../[...nextauth]/route";
+import { authOptions } from "../../api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
 
 interface Props {}
