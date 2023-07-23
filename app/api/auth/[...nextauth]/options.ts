@@ -6,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import EmailProvider from "next-auth/providers/email";
 import { prisma } from "@/lib/prisma";
+import sendVerificationRequest from "@/lib/email";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET!,
@@ -29,15 +30,25 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
+      server: process.env.EMAIL_SERVER,
       from: process.env.EMAIL_FROM,
+      sendVerificationRequest: ({
+        identifier: email,
+        url,
+        provider,
+        theme,
+        expires,
+        token,
+      }) => {
+        sendVerificationRequest({
+          identifier: email,
+          url,
+          provider,
+          theme,
+          expires,
+          token,
+        });
+      },
     }),
   ],
   adapter: PrismaAdapter(prisma),
