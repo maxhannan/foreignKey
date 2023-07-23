@@ -29,27 +29,27 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    EmailProvider({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-      sendVerificationRequest: ({
-        identifier: email,
-        url,
-        provider,
-        theme,
-        expires,
-        token,
-      }) => {
-        sendVerificationRequest({
-          identifier: email,
-          url,
-          provider,
-          theme,
-          expires,
-          token,
-        });
-      },
-    }),
+    // EmailProvider({
+    //   server: process.env.EMAIL_SERVER,
+    //   from: process.env.EMAIL_FROM,
+    //   sendVerificationRequest: ({
+    //     identifier: email,
+    //     url,
+    //     provider,
+    //     theme,
+    //     expires,
+    //     token,
+    //   }) => {
+    //     sendVerificationRequest({
+    //       identifier: email,
+    //       url,
+    //       provider,
+    //       theme,
+    //       expires,
+    //       token,
+    //     });
+    //   },
+    // }),
   ],
   adapter: PrismaAdapter(prisma),
   events: {

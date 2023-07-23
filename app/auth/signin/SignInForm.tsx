@@ -24,7 +24,7 @@ const SignInForm: FC<Props> = ({}) => {
   };
   return (
     <div className="grid gap-6">
-      <form onSubmit={(e) => handleSignInEmail(e)}>
+      {/* <form onSubmit={(e) => handleSignInEmail(e)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
@@ -47,17 +47,17 @@ const SignInForm: FC<Props> = ({}) => {
             Sign In with Email
           </Button>
         </div>
-      </form>
-      <div className="relative">
+      </form> */}
+      {/* <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
+            Continue with
           </span>
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-col gap-3">
         <GithubButton setIsLoading={setIsLoading} isLoading={isLoading} />
         <GoogleButton setIsLoading={setIsLoading} isLoading={isLoading} />
