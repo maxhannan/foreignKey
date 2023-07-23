@@ -41,4 +41,9 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   adapter: PrismaAdapter(prisma),
+  events: {
+    async createUser(message) {
+      console.log("createUser", { message }, message.user.email);
+    },
+  },
 };
