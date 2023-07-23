@@ -13,7 +13,7 @@ export default async function sendVerificationRequest(
   const { host } = new URL(url);
   resend.emails.send({
     to: identifier,
-    from: "info@quenelle.app",
+    from: provider.from,
     subject: `Sign in to ${host}`,
     html: html({ url, host, theme }),
     text: text({ url, host }),
