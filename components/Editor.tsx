@@ -133,9 +133,13 @@ const Editor: FC<Props> = ({}) => {
   }
 
   const { ref: titleRef, ...rest } = register("title");
-
+  const getImageLink = async () => {
+    const res = await axios.get("/api/fetchimageurl");
+    console.log({ res });
+  };
   return (
     <div className="w-full p-4 bg-background rounded-lg border border-muted">
+      <button onClick={getImageLink}>Get Image Link</button>
       <form
         id="subreddit-post-form"
         className="sm:w-[85%] lg:w-[90%] mx-auto"
