@@ -139,7 +139,6 @@ const Editor: FC<Props> = ({}) => {
   };
   return (
     <div className="w-full p-4 bg-background rounded-lg border border-muted">
-      <button onClick={getImageLink}>Get Image Link</button>
       <form
         id="subreddit-post-form"
         className="sm:w-[85%] lg:w-[90%] mx-auto"
