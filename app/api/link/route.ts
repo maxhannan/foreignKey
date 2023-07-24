@@ -1,5 +1,5 @@
 import axios from "axios";
-
+export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const href = url.searchParams.get("url");
