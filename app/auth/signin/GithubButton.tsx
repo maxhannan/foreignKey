@@ -17,7 +17,7 @@ function GithubButton({ setIsLoading, isLoading }: Props) {
       disabled={isLoading}
       onClick={() => {
         setIsLoading(true);
-        signIn("github", { callbackUrl: "/app" });
+        signIn("github");
       }}
     >
       {isLoading ? (

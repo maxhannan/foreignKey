@@ -12,8 +12,7 @@ interface Props {}
 
 const NavBar: FC<Props> = async ({}) => {
   const session = await getServerSession(authOptions);
-  console.log({ session });
-  const user = await getUserByEmail(session!.user!.email!);
+  if (!session) return null;
 
   return (
     <nav className="w-screen min-h-14 h-14 dark:border-b border-muted bg-background/30 backdrop-blur-md shadow-sm flex fixed top-0 right-0 left-0  z-50 ">
@@ -30,7 +29,7 @@ const NavBar: FC<Props> = async ({}) => {
         </div>
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <UserMenu user={user} />
+          <UserMenu user={session.user} />
           <MobileMenu />
         </div>
       </div>

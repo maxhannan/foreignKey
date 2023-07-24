@@ -17,7 +17,7 @@ function GoogleButton({ setIsLoading, isLoading }: Props) {
       disabled={isLoading}
       onClick={() => {
         setIsLoading(true);
-        signIn("google", { callbackUrl: "/app" });
+        signIn("google");
       }}
     >
       {isLoading ? (

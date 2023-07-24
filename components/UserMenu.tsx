@@ -20,8 +20,9 @@ import { signOut } from "next-auth/react";
 import { PersonIcon } from "@radix-ui/react-icons";
 import { User2Icon, UserCircle } from "lucide-react";
 import { Button } from "./ui/button";
+import { User } from "next-auth";
 interface Props {
-  user: Awaited<ReturnType<typeof getUserByEmail>>;
+  user: User;
 }
 
 const UserMenu: FC<Props> = ({ user }) => {
