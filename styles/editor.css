@@ -4,13 +4,72 @@
 .dark .ce-conversion-toolbar,
 .dark .ce-settings,
 .dark .ce-settings__button,
-.dark .ce-toolbar__settings-btn,
 .dark .cdx-button,
 .dark .ce-popover,
 .dark .ce-toolbar__plus:hover {
-  background: black;
-  color: black;
+  background: hsl(20 14.3% 4.1%);
+  color: white;
   border-color: theme("colors.border");
+}
+.link-tool__content--rendered,
+.link-tool_content {
+  pointer-events: none !important;
+}
+@media (min-width: 651px) {
+  .codex-editor--narrow .ce-toolbar__actions {
+    right: -18px;
+  }
+}
+
+.ce-toolbar__actions {
+  right: 101%;
+}
+@media (max-width: 650px) {
+  .ce-toolbar__actions {
+    right: auto;
+  }
+}
+
+.dark .ce-popover-item {
+  color: white;
+}
+.dark .ce-popover-item:hover:not(.ce-popover-item--no-hover) {
+  background-color: hsl(0, 50%, 1%);
+}
+.dark .ce-popover-item__icon {
+  background: hsl(20 14.3% 4.1%);
+}
+.image-tool--withBackground .image-tool__image {
+  background: hsl(60 4.8% 95.9%) !important;
+}
+.dark .image-tool--withBackground .image-tool__image {
+  background: hsl(12 6.5% 15.1%) !important;
+}
+.dark .ce-toolbar__plus,
+.dark .ce-toolbar__settings-btn {
+  border-color: hsl(12 6.5% 15.1%);
+  background-color: transparent;
+  color: white;
+}
+.dark .ce-toolbar__plus:hover,
+.dark .ce-toolbar__settings-btn:hover {
+  border-color: hsl(60 9.1% 97.8%);
+  background-color: hsl(12 6.5% 10.1%);
+  color: white;
+}
+@media (max-width: 650px) {
+  .dark .ce-toolbar__plus,
+  .dark .ce-toolbar__settings-btn {
+    border-color: hsl(12 6.5% 15.1%);
+    background-color: hsl(20 14.3% 4.1%);
+  }
+}
+@media (max-width: 650px) {
+  .dark .ce-toolbar__plus:hover,
+  .dark .ce-toolbar__settings-btn:hover {
+    border-color: hsl(12 6.5% 15.1%);
+    background-color: hsl(12 6.5% 10.1%);
+  }
 }
 
 .dark .ce-inline-tool,
@@ -18,12 +77,16 @@
 .dark .ce-toolbox__button,
 .dark .cdx-settings-button,
 .dark .ce-toolbar__plus {
-  color: --accent;
+  color: white;
 }
 
+.dark .link-tool__content--rendered {
+  background-color: hsl(20 14.3% 4.1%);
+  border-color: hsl(12 6.5% 15.1%);
+}
 .dark .ce-popover__item-icon,
 .dark .ce-conversion-tool__icon {
-  background-color: --background;
+  background-color: theme("colors.muted.DEFAULT");
   box-shadow: none;
 }
 
@@ -36,9 +99,7 @@
 .dark ::selection {
   background: theme("colors.accent.DEFAULT");
 }
-.dark .link-tool__content--rendered {
-  background: black;
-}
+
 .dark .cdx-settings-button:hover,
 .dark .ce-settings__button:hover,
 .dark .ce-toolbox__button--active,
@@ -47,8 +108,7 @@
 .dark .ce-inline-toolbar__dropdown:hover,
 .dark .ce-inline-tool:hover,
 .dark .ce-popover__item:hover,
-.dark .ce-conversion-tool:hover,
-.dark .ce-toolbar__settings-btn:hover {
+.dark .ce-conversion-tool:hover {
   background-color: theme("colors.accent.DEFAULT");
   color: theme("colors.accent.foreground");
 }

@@ -135,33 +135,35 @@ const Editor: FC<Props> = ({}) => {
   const { ref: titleRef, ...rest } = register("title");
 
   return (
-    <div className="w-full p-4 bg-background rounded-lg border border-muted">
-      <form
-        id="subreddit-post-form"
-        className="sm:w-[85%] lg:w-[90%] mx-auto"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className=" prose prose-stone dark:prose-invert  ">
-          <TextareaAutosize
-            ref={(e) => {
-              titleRef(e);
-              // @ts-ignore
-              _titleRef.current = e;
-            }}
-            {...rest}
-            placeholder="Title"
-            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
-          />
-          <div id="editor" className="min-h-[500px] w-full" />
-          <p className="text-sm text-gray-500">
-            Use{" "}
-            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-              Tab
-            </kbd>{" "}
-            to open the command menu.
-          </p>
-        </div>
-      </form>
+    <div className="flex flex-col items-center gap-6">
+      <div className="w-full max-w-[850px] p-4 bg-background rounded-lg border border-muted">
+        <form
+          id="subreddit-post-form"
+          className=" mx-auto"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className=" prose prose-stone dark:prose-invert mx-auto w-full ">
+            <TextareaAutosize
+              ref={(e) => {
+                titleRef(e);
+                // @ts-ignore
+                _titleRef.current = e;
+              }}
+              {...rest}
+              placeholder="Title"
+              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
+            />
+            <div id="editor" className="min-h-[500px] w-full" />
+            <p className="text-sm text-gray-500">
+              Use{" "}
+              <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+                Tab
+              </kbd>{" "}
+              to open the command menu.
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

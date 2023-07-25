@@ -9,11 +9,10 @@ export default function Home() {
   console.log({ session });
 
   return (
-    <main className="  ">
+    <main>
       {/* <Link href="/app/dashboard">Dashboard 2</Link> */}
-      <div className="flex flex-col items-start gap-6">
-        <Editor />
-      </div>
+
+      <Editor />
     </main>
   );
 }
