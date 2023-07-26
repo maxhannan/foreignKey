@@ -29,6 +29,10 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
+    EmailProvider({
+      from: process.env.EMAIL_FROM!,
+      sendVerificationRequest,
+    }),
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {

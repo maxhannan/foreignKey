@@ -8,11 +8,5 @@ export default function Home() {
   const session = getServerSession(authOptions);
   console.log({ session });
 
-  return (
-    <main>
-      {/* <Link href="/app/dashboard">Dashboard 2</Link> */}
-
-      <Editor />
-    </main>
-  );
+  return <main></main>;
 }
