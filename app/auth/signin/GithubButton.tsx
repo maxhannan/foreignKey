@@ -12,7 +12,7 @@ interface Props {
 function GithubButton({ setIsLoading, isLoading }: Props) {
   return (
     <Button
-      variant="outline"
+      variant="default"
       type="button"
       disabled={isLoading}
       onClick={() => {

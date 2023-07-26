@@ -4,10 +4,10 @@ import Link from "next/link";
 import type { FC } from "react";
 import { ModeToggle } from "./DarkModeToggle";
 import MobileMenu from "./MobileMenu";
-import { getUserByEmail } from "@/lib/user.server";
+
 import UserMenu from "./UserMenu";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { Button, buttonVariants } from "./ui/button";
+import { buttonVariants } from "./ui/button";
 
 interface Props {}
 

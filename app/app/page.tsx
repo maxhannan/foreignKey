@@ -4,9 +4,9 @@ import { authOptions } from "../api/auth/[...nextauth]/options";
 import Editor from "@/components/Editor";
 import axios from "axios";
 export const dynamic = "force-dynamic";
-export default function Home() {
-  const session = getServerSession(authOptions);
+export default async function Home() {
+  const session = await getServerSession(authOptions);
   console.log({ session });
 
-  return <main></main>;
+  return <main>{session?.user && <Editor />}</main>;
 }

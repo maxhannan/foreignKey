@@ -12,7 +12,7 @@ interface Props {
 function GoogleButton({ setIsLoading, isLoading }: Props) {
   return (
     <Button
-      variant="outline"
+      variant="default"
       type="button"
       disabled={isLoading}
       onClick={() => {

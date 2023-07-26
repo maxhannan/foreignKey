@@ -11,7 +11,7 @@ export const singleUpload = async (image: File) => {
     },
   });
   console.log({ response });
-  return `${IMAGE_URL}/${response.data.result.id}/carousel`;
+  return `${IMAGE_URL}/${response.data.result.id}/base`;
 };
 
 export const getUrl = async () => {
