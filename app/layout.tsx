@@ -16,15 +16,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  authModal,
 }: {
   children: React.ReactNode;
+  authModal: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={figtree.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
-            <div className=" ">{children}</div>
+            {authModal}
+            <main className="container mx-auto max-w-6xl p-2">
+              <NavBar />
+              <div className="h-16" />
+              <div className=" ">{children}</div>
+            </main>
           </NextAuthProvider>
         </ThemeProvider>
       </body>
