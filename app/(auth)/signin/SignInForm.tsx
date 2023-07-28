@@ -76,7 +76,7 @@ const SignInForm: FC<Props> = ({}) => {
           </div>
         </form>
       </div>
-      <p className="px-8 text-center text-sm text-muted-foreground">
+      <p className="px-8 text-center text-sm text-muted-foreground hidden sm:block">
         By clicking continue, you agree to our{" "}
         <Link
           href="/terms"
