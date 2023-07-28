@@ -19,6 +19,7 @@ const PostControls: FC<Props> = () => {
   const session = useSession();
   const [effect, setEffect] = useState(false);
   const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(128);
 
   return (
     <div className="flex w-full items-center gap-2">
@@ -58,8 +59,14 @@ const PostControls: FC<Props> = () => {
           )}
         </Button>
         {/* Like count */}
-        <span className=" px-2 py-1.5 rounded-md bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-300">
-          128
+        <span
+          className={`${
+            liked
+              ? "text-pink-500 dark:text-pink-400"
+              : "text-stone-500 dark:text-stone-300"
+          } px-2 py-1.5 rounded-md bg-stone-100 dark:bg-stone-800 transition-colors duration-300 ease-in-out `}
+        >
+          {liked ? likes + 1 : likes}
         </span>
       </div>
     </div>
