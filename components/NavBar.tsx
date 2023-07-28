@@ -8,7 +8,11 @@ import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { buttonVariants } from "./ui/button";
-
+import { Staatliches } from "next/font/google";
+const staatliches = Staatliches({
+  weight: "400",
+  subsets: ["latin"],
+});
 interface Props {}
 
 const NavBar: FC<Props> = async ({}) => {
@@ -16,15 +20,15 @@ const NavBar: FC<Props> = async ({}) => {
 
   return (
     <nav className="w-screen min-h-14 h-14 dark:border-b border-muted bg-background/30 backdrop-blur-md shadow-sm flex fixed top-0 right-0 left-0  z-50 ">
-      <div className="flex items-center justify-between max-w-6xl container  gap-2 px-4">
-        <div className="flex items-center gap-4">
-          <Link href={"/"}>
-            <div className="flex items-center  gap-1 cursor-pointer">
-              <GlobeIcon className="h-7 w-7 text-accent-foreground  text-purple-500 " />
-              <span className="font-semibold text-secondary-foreground text-lg   ">
-                foreign / key
-              </span>
-            </div>
+      <div className="flex items-center justify-between  w-full   gap-2 px-4">
+        <div className="flex items-center gap-4 pt-[2px]">
+          <MobileMenu />
+          <Link href={"/"} className="">
+            <span
+              className={`${staatliches.className} font-semibold text-2xl md:text-3xl text-emerald-500 `}
+            >
+              foreign / key
+            </span>
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -32,11 +36,13 @@ const NavBar: FC<Props> = async ({}) => {
           {session?.user ? (
             <UserMenu user={session.user} />
           ) : (
-            <Link href="/signin" className={buttonVariants()}>
+            <Link
+              href="/signin"
+              className={`${buttonVariants()}  hover:bg-emerald-400 hover:text-emerald-900 transition-colors duration-300 ease-in-out hover:animate-spin `}
+            >
               Sign In
             </Link>
           )}
-          <MobileMenu />
         </div>
       </div>
     </nav>

@@ -20,7 +20,7 @@ function MobileMenu() {
             <HamburgerMenuIcon className="h-5 w-5 text-accent-foreground   " />
           </Button>
         </SheetTrigger>
-        <SheetContent side={"right"} className="w-screen md:w-1/2">
+        <SheetContent side={"left"} className=" w-3/4">
           <SheetHeader></SheetHeader>
         </SheetContent>
       </Sheet>

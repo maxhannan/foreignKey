@@ -14,6 +14,7 @@ function GithubButton({ setIsLoading, isLoading }: Props) {
     <Button
       variant="default"
       type="button"
+      className="hover:bg-emerald-400 hover:text-emerald-900 transition-colors duration-300 "
       disabled={isLoading}
       onClick={() => {
         setIsLoading(true);
