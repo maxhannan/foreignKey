@@ -27,7 +27,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
             {authModal}
-            <main className="container mx-auto  p-2">
+            <main className=" 4xl:px-20">
               <NavBar />
               <div className="h-16" />
               <div className=" ">{children}</div>

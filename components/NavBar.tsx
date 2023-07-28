@@ -21,11 +21,11 @@ const NavBar: FC<Props> = async ({}) => {
   return (
     <nav className="w-screen min-h-14 h-14 dark:border-b border-muted bg-background/30 backdrop-blur-md shadow-sm flex fixed top-0 right-0 left-0  z-50 ">
       <div className="flex items-center justify-between  w-full   gap-2 px-4">
-        <div className="flex items-center gap-4 pt-[2px]">
+        <div className="flex items-center gap-4 ">
           <MobileMenu />
-          <Link href={"/"} className="">
+          <Link href={"/"} className="pt-[1px]">
             <span
-              className={`${staatliches.className} font-semibold text-2xl md:text-3xl text-emerald-500 `}
+              className={`${staatliches.className} font-semibold text-2xl md:text-3xl text-emerald-500 align-bottom h-full  `}
             >
               foreign / key
             </span>
