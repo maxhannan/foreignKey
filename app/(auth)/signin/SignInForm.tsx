@@ -13,7 +13,7 @@ import Link from "next/link";
 interface Props {}
 
 const SignInForm: FC<Props> = ({}) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
 
   return (
     <div className="container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
@@ -25,8 +25,8 @@ const SignInForm: FC<Props> = ({}) => {
       </div>
       <div className="grid gap-6">
         <div className="flex flex-col gap-3">
-          <GithubButton setIsLoading={setIsLoading} isLoading={isLoading} />
-          <GoogleButton setIsLoading={setIsLoading} isLoading={isLoading} />
+          <GithubButton setLoggingIn={setLoggingIn} disabled={loggingIn} />
+          <GoogleButton setLoggingIn={setLoggingIn} disabled={loggingIn} />
         </div>
 
         <div className="relative">
@@ -51,7 +51,7 @@ const SignInForm: FC<Props> = ({}) => {
                 type="text"
                 autoCapitalize="none"
                 autoCorrect="off"
-                disabled={isLoading}
+                disabled={loggingIn}
               />
             </div>
             <div className="grid gap-1">
@@ -64,13 +64,10 @@ const SignInForm: FC<Props> = ({}) => {
                 type="password"
                 autoCapitalize="none"
                 autoCorrect="off"
-                disabled={isLoading}
+                disabled={loggingIn}
               />
             </div>
-            <Button variant={"outline"} disabled={isLoading}>
-              {isLoading && (
-                <CircleDashedIcon className="mr-2 h-4 w-4 animate-spin" />
-              )}
+            <Button variant={"outline"} disabled={loggingIn}>
               Sign In with Credentials
             </Button>
           </div>

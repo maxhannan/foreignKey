@@ -3,22 +3,23 @@ import { Button } from "@/components/ui/button";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { CircleDashedIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 
-interface Props {
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  isLoading: boolean;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  setLoggingIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function GoogleButton({ setIsLoading, isLoading }: Props) {
+function GoogleButton({ setLoggingIn, ...rest }: Props) {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <Button
       variant="default"
       type="button"
-      disabled={isLoading}
       onClick={() => {
         setIsLoading(true);
+        setLoggingIn(true);
         signIn("google");
       }}
+      {...rest}
     >
       {isLoading ? (
         <CircleDashedIcon className="mr-2 h-4 w-4 animate-spin" />

@@ -12,6 +12,7 @@ import {
 } from "@radix-ui/react-icons";
 import { SaveIcon } from "lucide-react";
 import { set } from "zod";
+import { cn } from "@/lib/utils";
 
 interface Props {}
 
@@ -19,7 +20,7 @@ const PostControls: FC<Props> = () => {
   const session = useSession();
   const [effect, setEffect] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(128);
+  const [likes, setLikes] = useState(1234);
 
   return (
     <div className="flex w-full items-center gap-2">
@@ -33,7 +34,7 @@ const PostControls: FC<Props> = () => {
           </span>
         </AvatarFallback>
       </Avatar>
-      <span className="text-gray-500 dark:text-gray-300 text-sm sm:text-base">
+      <span className="text-gray-500 dark:text-gray-300 text-sm md:text-base">
         {session.data?.user.name}
       </span>
       <div className="ml-auto flex items-center gap-1">
@@ -43,20 +44,27 @@ const PostControls: FC<Props> = () => {
         <Button
           size={"icon"}
           variant={"ghost"}
-          className={`${effect && "animate-pingOnce"}`}
           onClick={() => {
-            setEffect(true);
-          }}
-          onAnimationEnd={() => {
-            setEffect(false);
             setLiked(!liked);
           }}
         >
-          {liked ? (
-            <HeartFilledIcon className="h-5 w-5 text-pink-500 dark:text-pink-400 " />
-          ) : (
-            <HeartIcon className="h-5 w-5 text-pink-500 dark:text-pink-400  " />
-          )}
+          <HeartFilledIcon
+            className={cn(
+              "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all rotate-90 scale-0",
+              {
+                "rotate-0 scale-100": liked,
+              }
+            )}
+          />
+          <HeartIcon
+            className={cn(
+              "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all rotate-0 scale-100 ",
+              {
+                "rotate-90 scale-0": liked,
+              }
+            )}
+          />
+          <span className="sr-only">Toggle theme</span>
         </Button>
         {/* Like count */}
         <span
@@ -64,7 +72,7 @@ const PostControls: FC<Props> = () => {
             liked
               ? "text-pink-500 dark:text-pink-400"
               : "text-stone-500 dark:text-stone-300"
-          } px-2 py-1.5 rounded-md bg-stone-100 dark:bg-stone-800 transition-colors duration-300 ease-in-out `}
+          } px-2 py-1.5 rounded-md bg-stone-100 dark:bg-stone-800 transition-colors duration-300 ease-in-out  `}
         >
           {liked ? likes + 1 : likes}
         </span>

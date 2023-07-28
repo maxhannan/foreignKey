@@ -135,14 +135,14 @@ const Editor: FC<Props> = ({}) => {
   const { ref: titleRef, ...rest } = register("title");
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <div className="w-full max-w-[850px] p-4 bg-background rounded-lg border border-muted">
+    <div className="flex flex-col items-center gap-6 max-w-[850px] mx-auto ">
+      <div className="w-full  lg:max-w-[850px] p-2 bg-background rounded-lg ">
         <form
           id="subreddit-post-form"
           className=" mx-auto"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className=" prose prose-stone dark:prose-invert mx-auto w-full ">
+          <div className=" max-w-[85ch] prose prose-stone dark:prose-invert mx-auto w-full ">
             <TextareaAutosize
               ref={(e) => {
                 titleRef(e);
@@ -153,7 +153,10 @@ const Editor: FC<Props> = ({}) => {
               placeholder="Title"
               className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
             />
-            <div id="editor" className="min-h-[500px] w-full" />
+            <div
+              id="editor"
+              className="min-h-[500px] w-full codex-editor--narrow "
+            />
             <p className="text-sm text-gray-500">
               Use{" "}
               <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">

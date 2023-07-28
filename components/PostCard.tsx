@@ -11,10 +11,17 @@ interface Props {
 
 const PostCard: FC<Props> = async ({ imgSrc }) => {
   return (
-    <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group">
+    <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group max-w-[500px]">
       {/* container for image in card */}
       <div className=" relative h-[270px] sm:h-[250px] rounded-lg overflow-hidden">
-        <Image src={imgSrc} alt="Next.js logo" className="object-cover" fill />
+        <Image
+          src={imgSrc}
+          alt="Next.js logo"
+          className="object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          placeholder="empty"
+        />
       </div>
       <div className="  pb-4 flex gap-1 flex-col group">
         <PostControls />

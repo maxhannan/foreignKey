@@ -21,6 +21,7 @@ import { PersonIcon } from "@radix-ui/react-icons";
 import { User2Icon, UserCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { User } from "next-auth";
+import Link from "next/link";
 interface Props {
   user: User;
 }
@@ -31,8 +32,8 @@ const UserMenu: FC<Props> = ({ user }) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           {user?.image ? (
-            <div className=" data-[state=open]:bg-gradient-to-r bg-transparent group data-[state=open]:text-muted from-pink-500 via-red-500 to-yellow-500 p-0.5 rounded-full transition-all duratr ">
-              <Avatar className="h-8 w-8 ">
+            <div className=" data-[state=open]:bg-gradient-to-r bg-transparent group data-[state=open]:text-muted from-pink-500 via-red-500 to-yellow-500 p-0.5 rounded-full">
+              <Avatar className="h-8 w-8  rounded-full">
                 <AvatarImage src={user!.image || undefined} />
 
                 <AvatarFallback className="bg-secondary">
@@ -50,8 +51,34 @@ const UserMenu: FC<Props> = ({ user }) => {
           )}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel className="flex items-center gap-2">
+            <Avatar className="h-6 w-6  rounded-full">
+              <AvatarImage src={user!.image || undefined} />
+
+              <AvatarFallback className="bg-secondary">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+                </span>
+              </AvatarFallback>
+            </Avatar>
+            <span className="text-stone-700 dark:text-stone-300 text-sm md:text-sm">
+              {user!.name}
+            </span>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuGroup className="md:hidden">
+            <Link href={"/create"}>
+              <Button
+                variant={"secondary"}
+                size={"lg"}
+                className="w-full  hover:bg-emerald-300 hover:text-emerald-900"
+              >
+                Share your work
+              </Button>
+            </Link>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator className="md:hidden" />
           <DropdownMenuGroup>
             <DropdownMenuItem>
               Profile
@@ -70,29 +97,6 @@ const UserMenu: FC<Props> = ({ user }) => {
               <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email</DropdownMenuItem>
-                  <DropdownMenuItem>Message</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-            <DropdownMenuItem>
-              New Team
-              <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>GitHub</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuItem disabled>API</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>
             Log out

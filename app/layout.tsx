@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={figtree.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
-            <main className="md:px-2 4xl:px-24">
+            <main className="px-2">
               {authModal}
               <NavBar />
               <div className="h-16" />

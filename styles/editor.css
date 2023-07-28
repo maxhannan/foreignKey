@@ -125,3 +125,19 @@
 .codex-editor__redactor {
   padding-bottom: 0 !important;
 }
+
+.ce-toolbar__content {
+  max-width: 850px;
+}
+.ce-block__content {
+  max-width: 850px;
+}
+@media (min-width: 651px) {
+  .codex-editor--narrow .ce-toolbar__actions {
+    right: -14px;
+  }
+}
+.image-tool__image-picture {
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,4 +1,4 @@
-import { GlobeIcon } from "@radix-ui/react-icons";
+import { GlobeIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import type { FC } from "react";
@@ -7,8 +7,9 @@ import MobileMenu from "./MobileMenu";
 
 import UserMenu from "./UserMenu";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Staatliches } from "next/font/google";
+import { cn } from "@/lib/utils";
 const staatliches = Staatliches({
   weight: "400",
   subsets: ["latin"],
@@ -21,7 +22,7 @@ const NavBar: FC<Props> = async ({}) => {
   return (
     <nav className="w-screen min-h-14 h-14  bg-background/30 backdrop-blur-md shadow-sm flex fixed top-0 right-0 left-0  z-50 ">
       <div className="flex items-center justify-between  w-full   gap-2 px-4 lg:px-8">
-        <div className="flex items-center gap-4 ">
+        <div className="flex items-center gap-1 ">
           <MobileMenu />
           <Link href={"/"} className="pt-[1px]">
             <span
@@ -32,13 +33,27 @@ const NavBar: FC<Props> = async ({}) => {
           </Link>
         </div>
         <div className="flex items-center gap-2">
+          <Link href={"/create"}>
+            <Button
+              variant="ghost"
+              className="hidden md:block hover:bg-emerald-300 hover:text-emerald-900"
+            >
+              Share your work
+            </Button>
+          </Link>
+          <Button variant="ghost" size="icon" className="rounded-md">
+            <MagnifyingGlassIcon className="h-5 w-5  text-accent-foreground " />
+          </Button>
           <ModeToggle />
           {session?.user ? (
             <UserMenu user={session.user} />
           ) : (
             <Link
               href="/signin"
-              className={`${buttonVariants()}  hover:bg-emerald-400 hover:text-emerald-900 transition-colors duration-300 ease-in-out hover:animate-spin `}
+              className={cn([
+                `${buttonVariants()} `,
+                "hover:bg-emerald-400 hover:text-emerald-900",
+              ])}
             >
               Sign In
             </Link>
