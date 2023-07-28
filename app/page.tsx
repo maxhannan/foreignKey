@@ -12,8 +12,8 @@ export default async function Home() {
 
   return (
     // A grid of posts with a sidebar
-    <main className="px-2">
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5  gap-6 gap-y-4">
+    <main className="px-4">
+      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5  gap-6 gap-y-4">
         <PostCard imgSrc="https://imagedelivery.net/0xmRpZUcpgGyk0D6fR-N6A/568bad9e-560a-4108-c3b8-70da3eb2d300/base" />
         <PostCard imgSrc="https://imagedelivery.net/0xmRpZUcpgGyk0D6fR-N6A/16d7982a-faae-4eaf-bb28-c209cfdaa300/base" />
         <PostCard imgSrc="https://imagedelivery.net/0xmRpZUcpgGyk0D6fR-N6A/ace412da-826b-44a0-122d-78c05c209700/base" />
