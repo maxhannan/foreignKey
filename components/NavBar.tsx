@@ -16,7 +16,7 @@ const NavBar: FC<Props> = async ({}) => {
 
   return (
     <nav className="w-screen min-h-14 h-14 dark:border-b border-muted bg-background/30 backdrop-blur-md shadow-sm flex fixed top-0 right-0 left-0  z-50 ">
-      <div className="flex items-center justify-between max-w-6xl container mx-auto gap-2">
+      <div className="flex items-center justify-between max-w-6xl container  gap-2 px-4">
         <div className="flex items-center gap-4">
           <Link href={"/"}>
             <div className="flex items-center  gap-1 cursor-pointer">
