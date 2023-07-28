@@ -48,6 +48,7 @@ id            String    @id @default(cuid())
 name          String?
 email         String?   @unique
 emailVerified DateTime?
+username String? @unique
 image         String?
 accounts      Account[]
 sessions      Session[]
