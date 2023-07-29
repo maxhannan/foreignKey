@@ -1,25 +1,20 @@
 import PostFeed from "@/components/post/PostFeed";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/lib/config";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import { Post, Prisma, User } from "@prisma/client";
 
 export const getPosts = async () => {
   const posts = await prisma.post.findMany({
     orderBy: {
       createdAt: "desc",
     },
-    select: {
-      id: true,
-      title: true,
+    include: {
       author: {
         select: {
           name: true,
           image: true,
         },
       },
-      createdAt: true,
-      featuredImgBlurHash: true,
-      featuredImgSrc: true,
     },
 
     take: INFINITE_SCROLL_PAGINATION_RESULTS, // 4 to demonstrate infinite scroll, should be higher in production
@@ -27,7 +22,12 @@ export const getPosts = async () => {
   return posts;
 };
 
-export type ExtendedPost = Prisma.PromiseReturnType<typeof getPosts>;
+export type ExtendedPost = Post & {
+  author: {
+    name: string;
+    image: string;
+  };
+};
 
 const HomePageFeed = async () => {
   const posts = await getPosts();

@@ -14,9 +14,14 @@ import { SaveIcon } from "lucide-react";
 import { set } from "zod";
 import { cn } from "@/lib/utils";
 
-interface Props {}
+interface Props {
+  author: {
+    name: string;
+    image: string;
+  };
+}
 
-const PostControls: FC<Props> = () => {
+const PostControls: FC<Props> = ({ author }) => {
   const session = useSession();
   const [effect, setEffect] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -25,7 +30,7 @@ const PostControls: FC<Props> = () => {
   return (
     <div className="flex w-full items-center gap-2">
       <Avatar className="h-5 w-5 ">
-        <AvatarImage src={session.data?.user.image || undefined} />
+        <AvatarImage src={author.image || undefined} />
 
         <AvatarFallback className="bg-secondary">
           <span className="relative flex h-3 w-3">
@@ -35,7 +40,7 @@ const PostControls: FC<Props> = () => {
         </AvatarFallback>
       </Avatar>
       <span className="text-gray-500 dark:text-gray-300 text-sm md:text-base">
-        {session.data?.user.name}
+        {author.name}
       </span>
       <div className="ml-auto flex items-center gap-1">
         <Button size={"icon"} variant={"ghost"}>

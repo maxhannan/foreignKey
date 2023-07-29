@@ -55,32 +55,18 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
   return (
     <div className="mb-4 mt-2">
       <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5  gap-6 gap-y-4 ">
-        {posts.map((post, index) => {
-          if (index === posts.length - 1) {
-            return (
-              // @ts-ignore
-              <div key={post.id} ref={ref}>
-                <PostCard
-                  // @ts-ignore
-                  imgSrc={post.featuredImgSrc}
-                  // @ts-ignore
-                  blurHash={post.featuredImgBlurHash}
-                />
-              </div>
-            );
-          }
-          // @ts-ignore
-          return (
-            <PostCard
-              // @ts-ignore
-              key={post.id}
-              // @ts-ignore
-              imgSrc={post.featuredImgSrc}
-              // @ts-ignore
-              blurHash={post.featuredImgBlurHash}
-            />
-          );
-        })}
+        {posts &&
+          posts.map((post, index) => {
+            if (index === posts.length - 1) {
+              return (
+                <div key={post.id} ref={ref}>
+                  <PostCard post={post} />
+                </div>
+              );
+            }
+
+            return <PostCard key={post.id} post={post} />;
+          })}
       </div>
       {isFetchingNextPage && (
         <li className="flex justify-center">

@@ -25,18 +25,13 @@ export async function GET(req: Request) {
       orderBy: {
         createdAt: "desc",
       },
-      select: {
-        id: true,
-        title: true,
+      include: {
         author: {
           select: {
             name: true,
             image: true,
           },
         },
-        createdAt: true,
-        featuredImgBlurHash: true,
-        featuredImgSrc: true,
       },
       skip: (parseInt(page) - 1) * parseInt(limit),
       take: INFINITE_SCROLL_PAGINATION_RESULTS, // 4 to demonstrate infinite scroll, should be higher in production
