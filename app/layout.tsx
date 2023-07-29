@@ -5,6 +5,7 @@ import { NextAuthProvider } from "./providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import NavBar from "@/components/NavBar";
 import { Figtree } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 const figtree = Figtree({
   subsets: ["latin"],
 });
@@ -28,9 +29,9 @@ export default function RootLayout({
           <NextAuthProvider>
             <main className="px-2">
               {authModal}
-              <NavBar />
               <div className="h-16" />
               <div className=" ">{children}</div>
+              <Toaster />
             </main>
           </NextAuthProvider>
         </ThemeProvider>

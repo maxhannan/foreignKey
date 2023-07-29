@@ -19,8 +19,9 @@ const PostCard: FC<Props> = async ({ imgSrc }) => {
           alt="Next.js logo"
           className="object-cover"
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          placeholder="empty"
+          blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mMUP8JTDwADSQFo7hQiCQAAAABJRU5ErkJggg=="
+          sizes="(max-height: 270px) 100vw, "
+          placeholder="blur"
         />
       </div>
       <div className="  pb-4 flex gap-1 flex-col group">

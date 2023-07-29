@@ -12,6 +12,7 @@ import axios from "axios";
 
 import "@/styles/editor.css";
 import { singleUpload } from "@/lib/imageupload";
+import { BlockMutationEvent } from "@editorjs/editorjs/types/events/block";
 interface Props {}
 
 type FormData = z.infer<typeof PostValidator>;
@@ -25,6 +26,7 @@ const Editor: FC<Props> = ({}) => {
     resolver: zodResolver(PostValidator),
     defaultValues: {
       title: "",
+      subtitle: "",
       content: null,
     },
   });
@@ -49,10 +51,11 @@ const Editor: FC<Props> = ({}) => {
     if (!ref.current) {
       const editor = new EditorJS({
         holder: "editor",
-
+        onChange: async (api, e: BlockMutationEvent[]) => {},
         onReady() {
           ref.current = editor;
         },
+        defaultBlock: "image",
         placeholder: "Type here to write your post...",
         inlineToolbar: true,
         data: { blocks: [] },
@@ -122,6 +125,7 @@ const Editor: FC<Props> = ({}) => {
 
     const payload: PostCreationRequest = {
       title: data.title,
+      subtitle: data.subtitle,
       content: blocks,
     };
 
@@ -151,8 +155,14 @@ const Editor: FC<Props> = ({}) => {
               }}
               {...rest}
               placeholder="Title"
-              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
+              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none py-2"
             />
+            <input
+              {...register("subtitle")}
+              placeholder="Subtitle"
+              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-normal text-muted-foreground focus:outline-none mb-2"
+            />
+
             <div
               id="editor"
               className="min-h-[500px] w-full codex-editor--narrow "
