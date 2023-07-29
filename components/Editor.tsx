@@ -13,15 +13,20 @@ import axios from "axios";
 import "@/styles/editor.css";
 import { singleUpload } from "@/lib/imageupload";
 import { BlockMutationEvent } from "@editorjs/editorjs/types/events/block";
+import { useToast } from "./ui/use-toast";
+import CreateControls from "@/app/create/components/CreateControls";
+import { revalidatePath } from "next/cache";
 interface Props {}
 
 type FormData = z.infer<typeof PostValidator>;
 
 const Editor: FC<Props> = ({}) => {
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(PostValidator),
     defaultValues: {
@@ -36,6 +41,43 @@ const Editor: FC<Props> = ({}) => {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const pathname = usePathname();
+
+  const { mutate: createPost, isLoading } = useMutation({
+    mutationFn: async ({
+      title,
+      content,
+      subtitle,
+      featuredImageUrl,
+    }: PostCreationRequest) => {
+      const payload: PostCreationRequest = {
+        title,
+        content,
+        subtitle,
+        featuredImageUrl,
+      };
+      const { data } = await axios.post("/api/post/create", payload);
+      return data;
+    },
+    onError: () => {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your post was not published. Please try again.",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      // turn pathname /r/mycommunity/submit into /r/mycommunity
+
+      router.push("/");
+      router.refresh();
+
+      return toast({
+        title: "Your post is published.",
+        description: "Your post is now live.",
+        variant: "success",
+      });
+    },
+  });
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
@@ -96,6 +138,20 @@ const Editor: FC<Props> = ({}) => {
   }, []);
 
   useEffect(() => {
+    if (Object.keys(errors).length) {
+      console.log({ errors });
+      for (const [_key, value] of Object.entries(errors)) {
+        value;
+        toast({
+          title: "Something went wrong.",
+          description: (value as { message: string }).message,
+          variant: "destructive",
+        });
+      }
+    }
+  }, [errors]);
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
       setIsMounted(true);
     }
@@ -121,15 +177,33 @@ const Editor: FC<Props> = ({}) => {
   }, [isMounted, initializeEditor]);
 
   async function onSubmit(data: FormData) {
-    const blocks = await ref.current?.save();
+    const editordata = await ref.current?.save();
+
+    if (!editordata || editordata.blocks.length < 1) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your post must have at least one block.",
+        variant: "destructive",
+      });
+    } else if (
+      editordata.blocks.filter((block) => block.type === "image").length < 1
+    ) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your post must have at least one image.",
+        variant: "destructive",
+      });
+    }
 
     const payload: PostCreationRequest = {
       title: data.title,
       subtitle: data.subtitle,
-      content: blocks,
+      content: editordata,
+      featuredImageUrl: editordata.blocks.filter(
+        (block) => block.type === "image"
+      )[0].data.file.url,
     };
-
-    console.log(payload);
+    createPost(payload);
   }
 
   if (!isMounted) {
@@ -139,45 +213,48 @@ const Editor: FC<Props> = ({}) => {
   const { ref: titleRef, ...rest } = register("title");
 
   return (
-    <div className="flex flex-col items-center gap-6 max-w-[850px] mx-auto ">
-      <div className="w-full  lg:max-w-[850px] p-2 bg-background rounded-lg ">
-        <form
-          id="subreddit-post-form"
-          className=" mx-auto"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className=" max-w-[85ch] prose prose-stone dark:prose-invert mx-auto w-full ">
-            <TextareaAutosize
-              ref={(e) => {
-                titleRef(e);
-                // @ts-ignore
-                _titleRef.current = e;
-              }}
-              {...rest}
-              placeholder="Title"
-              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none py-2"
-            />
-            <input
-              {...register("subtitle")}
-              placeholder="Subtitle"
-              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-normal text-muted-foreground focus:outline-none mb-2"
-            />
+    <>
+      <CreateControls submitting={isLoading || isSubmitting} />
+      <div className="flex flex-col items-center gap-6 max-w-[850px] mx-auto ">
+        <div className="w-full  lg:max-w-[850px] p-2 bg-background rounded-lg ">
+          <form
+            id="post-form"
+            className=" mx-auto"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className=" max-w-[85ch] prose prose-stone dark:prose-invert mx-auto w-full ">
+              <TextareaAutosize
+                ref={(e) => {
+                  titleRef(e);
+                  // @ts-ignore
+                  _titleRef.current = e;
+                }}
+                {...rest}
+                placeholder="Title"
+                className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none py-2"
+              />
+              <input
+                {...register("subtitle")}
+                placeholder="Subtitle"
+                className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-normal text-muted-foreground focus:outline-none mb-2"
+              />
 
-            <div
-              id="editor"
-              className="min-h-[500px] w-full codex-editor--narrow "
-            />
-            <p className="text-sm text-gray-500">
-              Use{" "}
-              <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-                Tab
-              </kbd>{" "}
-              to open the command menu.
-            </p>
-          </div>
-        </form>
+              <div
+                id="editor"
+                className="min-h-[500px] w-full codex-editor--narrow "
+              />
+              <p className="text-sm text-gray-500">
+                Use{" "}
+                <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+                  Tab
+                </kbd>{" "}
+                to open the command menu.
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

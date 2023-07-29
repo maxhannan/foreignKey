@@ -69,11 +69,15 @@ expires    DateTime
 model Post {
   id        String   @id @default(cuid())
   title     String
-  featuredImgSrc String?
+  subtitle  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  featuredImgSrc String
+  featuredImgBlurHash String
   content   Json?  
   published Boolean  @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
+   author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
   tags      Tag[]    
   comments  Comment[]
   likes     Like[]

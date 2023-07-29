@@ -1,15 +1,16 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { XIcon } from "lucide-react";
+import { CircleDashedIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
-interface Props {}
+interface Props {
+  submitting: boolean;
+}
 
-const CreateControls: FC<Props> = ({}) => {
-  const { toast } = useToast();
+const CreateControls: FC<Props> = ({ submitting }) => {
   const router = useRouter();
 
   return (
@@ -20,24 +21,30 @@ const CreateControls: FC<Props> = ({}) => {
             variant="ghost"
             className="px-2"
             onClick={() => router.back()}
+            disabled={submitting}
           >
             <XIcon className="mr-2 h-4 w-4 text-accent-foreground " />
             Close
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="secondary">Save as draft</Button>
+          <Button variant="secondary" disabled={submitting}>
+            Save as draft
+          </Button>
           <Button
-            onClick={() =>
-              toast({
-                title: "Post published",
-                description: "Your post has been published",
-                variant: "success",
-              })
-            }
+            type="submit"
+            form="post-form"
+            disabled={submitting}
             className="bg-emerald-200 text-emerald-800 hover:bg-emerald-400 hover:text-emerald-900 shadow-none"
           >
-            Publish
+            {submitting ? (
+              <>
+                <CircleDashedIcon className=" h-4 w-4 mr-2 animate-spin" />
+                <span>Publishing...</span>{" "}
+              </>
+            ) : (
+              <span>Publish</span>
+            )}
           </Button>
         </div>
       </div>

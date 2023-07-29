@@ -9,18 +9,18 @@ interface Props {
   imgSrc: string;
 }
 
-const PostCard: FC<Props> = async ({ imgSrc }) => {
+const PostCard: FC<Props> = ({ imgSrc }) => {
   return (
     <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group max-w-[500px]">
       {/* container for image in card */}
-      <div className=" relative h-[270px] sm:h-[250px] rounded-lg overflow-hidden">
+      <div className=" relative h-[270px] sm:h-[300px] rounded-lg overflow-hidden">
         <Image
           src={imgSrc}
           alt="Next.js logo"
           className="object-cover"
           fill
-          blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mMUP8JTDwADSQFo7hQiCQAAAABJRU5ErkJggg=="
-          sizes="(max-height: 270px) 100vw, "
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAMElEQVR4nGNQic3VyijXCYoS0jFlyJ0+9/T//x5x6TImjgz8DKzLWzqndmyw8SwDAAE/DdsDUdfPAAAAAElFTkSuQmCC"
+          sizes="(max-height: 300px) 100vw, "
           placeholder="blur"
         />
       </div>

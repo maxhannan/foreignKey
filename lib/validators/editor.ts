@@ -15,10 +15,12 @@ export const PostValidator = z.object({
       message: "Subtitle must be less than 256 characters long",
     })
     .min(3, {
-      message: "Title must be at least 3 characters long",
+      message: "Subtitle must be at least 3 characters long",
     }),
 
   content: z.any(),
 });
-
-export type PostCreationRequest = z.infer<typeof PostValidator>;
+export const PostCreationRequestValidator = PostValidator.extend({
+  featuredImageUrl: z.string().url(),
+});
+export type PostCreationRequest = z.infer<typeof PostCreationRequestValidator>;
