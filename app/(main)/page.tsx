@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     // A grid of posts with a sidebar
-    <main className="px-4">
+    <main className="px-2">
       {/* @ts-ignore */}
       <PostFeed initialPosts={posts} />
     </main>
