@@ -1,10 +1,7 @@
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import Editor from "@/components/Editor";
-import axios from "axios";
-export const dynamic = "force-dynamic";
-import Image from "next/image";
+
 import PostCard from "@/components/PostCard";
 import HomePageFeed, { getPosts } from "./components/HomepageFeed";
 import PostFeed from "@/components/post/PostFeed";

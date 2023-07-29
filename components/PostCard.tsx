@@ -14,7 +14,7 @@ const PostCard: FC<Props> = ({ imgSrc, blurHash }) => {
   return (
     <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group max-w-[500px]">
       {/* container for image in card */}
-      <div className=" relative h-[220px] sm:h-[300px] rounded-lg  overflow-hidden">
+      <div className=" relative h-[250px] sm:h-[300px] rounded-lg  overflow-hidden">
         <Image
           src={imgSrc}
           alt="Next.js logo"
