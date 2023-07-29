@@ -49,7 +49,8 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
     }
   }, [entry, fetchNextPage]);
 
-  const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
+  const posts =
+    data?.pages.flatMap((page) => page) ?? initialPosts.flatMap((page) => page);
   console.log(data?.pages.flatMap((page) => page));
   return (
     <div className="mb-4 mt-2">
@@ -59,13 +60,26 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
             return (
               // @ts-ignore
               <div key={post.id} ref={ref}>
-                {/* @ts-ignore */}
-                <PostCard imgSrc={post.featuredImgSrc} />
+                <PostCard
+                  // @ts-ignore
+                  imgSrc={post.featuredImgSrc}
+                  // @ts-ignore
+                  blurHash={post.featuredImgBlurHash}
+                />
               </div>
             );
           }
           // @ts-ignore
-          return <PostCard key={post.id} imgSrc={post.featuredImgSrc} />;
+          return (
+            <PostCard
+              // @ts-ignore
+              key={post.id}
+              // @ts-ignore
+              imgSrc={post.featuredImgSrc}
+              // @ts-ignore
+              blurHash={post.featuredImgBlurHash}
+            />
+          );
         })}
       </div>
       {isFetchingNextPage && (

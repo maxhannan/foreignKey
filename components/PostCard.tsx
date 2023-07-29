@@ -7,9 +7,10 @@ import PostControls from "./post/PostControls";
 import { EyeIcon } from "lucide-react";
 interface Props {
   imgSrc: string;
+  blurHash: string;
 }
 
-const PostCard: FC<Props> = ({ imgSrc }) => {
+const PostCard: FC<Props> = ({ imgSrc, blurHash }) => {
   return (
     <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group max-w-[500px]">
       {/* container for image in card */}
@@ -19,8 +20,7 @@ const PostCard: FC<Props> = ({ imgSrc }) => {
           alt="Next.js logo"
           className="object-cover"
           fill
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAMElEQVR4nGNQic3VyijXCYoS0jFlyJ0+9/T//x5x6TImjgz8DKzLWzqndmyw8SwDAAE/DdsDUdfPAAAAAElFTkSuQmCC"
-          sizes="(max-height: 300px) 100vw, "
+          blurDataURL={blurHash}
           placeholder="blur"
         />
       </div>
