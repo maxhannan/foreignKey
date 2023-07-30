@@ -16,8 +16,8 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   author: {
-    name: string;
-    image: string;
+    name: string | null;
+    image: string | null;
   };
 }
 
