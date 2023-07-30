@@ -6,7 +6,7 @@ function CustomImageRenderer({ data }: any) {
   const src = data.file.url;
 
   return (
-    <div className="relative rounded-lg overflow-hidden aspect[16/9] max-h-[766px] bg-stone-100 dark:bg-stone-800 not-prose   ">
+    <div className="relative rounded-lg overflow-hidden   max-h-[766px]  bg-stone-100 dark:bg-stone-800 not-prose   ">
       <Image
         alt="image"
         src={src}
