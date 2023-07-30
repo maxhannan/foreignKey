@@ -30,11 +30,7 @@ interface Props {
 }
 
 const EditorOutput: FC<Props> = ({ content }) => {
-  return (
-    <div className="container mx-auto max-w-[900px] px-1.5">
-      <Output className="text-sm" renderers={renderers} data={content} />
-    </div>
-  );
+  return <Output className="text-sm" renderers={renderers} data={content} />;
 };
 
 export default EditorOutput;

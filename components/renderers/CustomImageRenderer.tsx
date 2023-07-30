@@ -6,13 +6,15 @@ function CustomImageRenderer({ data }: any) {
   const src = data.file.url;
 
   return (
-    <div className="relative  flex justify-center mb-4  max-h-[800px]  ">
+    <div className="relative rounded-lg overflow-hidden aspect[16/9] max-h-[766px] bg-stone-100 dark:bg-stone-800 not-prose   ">
       <Image
         alt="image"
-        className="object-scale-down rounded-xl "
-        height={800}
-        width={1000}
         src={src}
+        quality={100}
+        height={766}
+        width={1366}
+        className="object-contain"
+        sizes="100vw"
       />
     </div>
   );
