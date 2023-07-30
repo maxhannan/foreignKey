@@ -31,7 +31,7 @@ const PostPage: FC<Props> = async ({ params }) => {
   });
   if (!post) return notFound();
   return (
-    <div className="container mx-auto max-w-[1000px] px-1.5 prose prose-stone dark:prose-invert mt-4">
+    <div className="container mx-auto max-w-[1200px] px-1.5 prose prose-stone dark:prose-invert mt-4">
       <div className="not-prose mb-2">
         <h1 className="text-4xl font-bold not-prose ">{post.title}</h1>
         <h4 className="text-muted-foreground font-light not-prose text-xl">
