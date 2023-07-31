@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Button } from "../ui/button";
 import {
+  BookmarkFilledIcon,
   BookmarkIcon,
   HeartFilledIcon,
   HeartIcon,
@@ -22,10 +23,9 @@ interface Props {
 }
 
 const PostControls: FC<Props> = ({ author }) => {
-  const session = useSession();
-  const [effect, setEffect] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(1234);
+  const [saved, setSaved] = useState(false);
 
   return (
     <div className="flex w-full items-center gap-2">
@@ -43,8 +43,22 @@ const PostControls: FC<Props> = ({ author }) => {
         {author.name}
       </span>
       <div className="ml-auto flex items-center gap-1">
-        <Button size={"icon"} variant={"ghost"}>
-          <BookmarkIcon className="h-5 w-5 text-gray-500 dark:text-gray-300 " />
+        <Button
+          size={"icon"}
+          variant={"ghost"}
+          onClick={() => {
+            setSaved(!saved);
+          }}
+        >
+          {saved ? (
+            <BookmarkFilledIcon
+              className={cn(
+                "h-5 w-5 text-amber-500 dark:text-amber-400 transition-all animate-in zoom-in "
+              )}
+            />
+          ) : (
+            <BookmarkIcon className="h-5 w-5 text-gray-500 dark:text-gray-300  animate-in zoom-in " />
+          )}
         </Button>
         <Button
           size={"icon"}
@@ -53,22 +67,20 @@ const PostControls: FC<Props> = ({ author }) => {
             setLiked(!liked);
           }}
         >
-          <HeartFilledIcon
-            className={cn(
-              "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all rotate-90 scale-0",
-              {
-                "rotate-0 scale-100": liked,
-              }
-            )}
-          />
-          <HeartIcon
-            className={cn(
-              "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all rotate-0 scale-100 ",
-              {
-                "rotate-90 scale-0": liked,
-              }
-            )}
-          />
+          {liked ? (
+            <HeartFilledIcon
+              className={cn(
+                "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180 "
+              )}
+            />
+          ) : (
+            <HeartIcon
+              className={cn(
+                " h-5 w-5 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180   "
+              )}
+            />
+          )}
+
           <span className="sr-only">Toggle theme</span>
         </Button>
         {/* Like count */}

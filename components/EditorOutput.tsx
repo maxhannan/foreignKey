@@ -30,7 +30,7 @@ interface Props {
 }
 
 const EditorOutput: FC<Props> = ({ content }) => {
-  return <Output className="text-sm" renderers={renderers} data={content} />;
+  return <Output className="text-sm " renderers={renderers} data={content} />;
 };
 
 export default EditorOutput;

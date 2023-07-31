@@ -13,9 +13,9 @@ interface Props {
 
 const PostCard: FC<Props> = ({ post }) => {
   return (
-    <Link href={`/post/${post.id}`}>
-      <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group ">
-        {/* container for image in card */}
+    <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group animate-in fade-in duration-700">
+      {/* container for image in card */}
+      <Link href={`/post/${post.id}`}>
         <div className=" relative h-[300px] rounded-lg overflow-hidden">
           <Image
             src={post.featuredImgSrc}
@@ -27,15 +27,17 @@ const PostCard: FC<Props> = ({ post }) => {
             placeholder="blur"
           />
         </div>
-        <div className="  pb-4 flex gap-1 flex-col group">
-          <PostControls author={post.author} />
+      </Link>
+      <div className="  pb-4 flex gap-1 flex-col group">
+        <PostControls author={post.author} />
+        <Link href={`/post/${post.id}`}>
           <h2 className="text-xl font-semibold text-stone-800 dark:text-white">
             {post.title} -{" "}
             <span className="text-stone-500 font-normal">{post.subtitle}</span>
           </h2>
-        </div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

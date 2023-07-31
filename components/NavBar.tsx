@@ -1,4 +1,9 @@
-import { GlobeIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import {
+  BookmarkIcon,
+  ChatBubbleIcon,
+  GlobeIcon,
+  MagnifyingGlassIcon,
+} from "@radix-ui/react-icons";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import type { FC } from "react";
@@ -10,6 +15,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Button, buttonVariants } from "./ui/button";
 import { Staatliches } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Bookmark, Compass, MessagesSquare } from "lucide-react";
 const staatliches = Staatliches({
   weight: "400",
   subsets: ["latin"],
@@ -31,6 +37,43 @@ const NavBar: FC<Props> = async ({}) => {
               foreign / key
             </span>
           </Link>
+          {/* Nav Links */}
+          <div
+            className={` hidden md:flex items-center gap-6 ml-6 font-semibold text-stone-600 dark:text-white `}
+          >
+            <Link
+              href={"/"}
+              className=" relative  font-normal group flex items-center px-2"
+            >
+              For You <GlobeIcon className="h-4 w-4 ml-1.5" />
+              {/* hover animated undelrine */}
+              <div className="absolute -bottom-4  left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+            </Link>
+            <Link
+              href={"/"}
+              className=" relative  font-normal group flex items-center px-2"
+            >
+              Explore <Compass className="h-4 w-4 ml-1.5" />
+              {/* hover animated undelrine */}
+              <div className="absolute -bottom-4 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+            </Link>
+            <Link
+              href={"/"}
+              className=" relative  font-normal group flex items-center px-2"
+            >
+              Boards <Bookmark className="h-4 w-4 ml-1.5 " />
+              {/* hover animated undelrine */}
+              <div className="absolute -bottom-4 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+            </Link>
+            <Link
+              href={"/"}
+              className=" relative  font-normal group flex items-center px-2"
+            >
+              Messages <MessagesSquare className="h-4 w-4 ml-1.5" />
+              {/* hover animated undelrine */}
+              <div className="absolute -bottom-4 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+            </Link>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <Link href={"/create"}>
