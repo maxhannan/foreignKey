@@ -15,7 +15,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Button, buttonVariants } from "./ui/button";
 import { Staatliches } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Bookmark, Compass, MessagesSquare } from "lucide-react";
+import { Bell, Bookmark, Compass, MessagesSquare } from "lucide-react";
 const staatliches = Staatliches({
   weight: "400",
   subsets: ["latin"],
@@ -27,66 +27,76 @@ const NavBar: FC<Props> = async ({}) => {
 
   return (
     <nav className="w-screen min-h-14 h-14  bg-background/30 backdrop-blur-md shadow-sm flex fixed top-0 right-0 left-0  z-50 ">
-      <div className="flex items-center justify-between  w-full   gap-2 px-4 lg:px-8">
+      <div className="flex items-center justify-between  w-full   gap-2 px-2 xs:px-4 lg:px-8">
         <div className="flex items-center gap-1 ">
           <MobileMenu />
           <Link href={"/"} className="pt-[1px]">
             <span
-              className={`${staatliches.className} font-semibold text-2xl md:text-3xl text-emerald-500 align-bottom h-full  `}
+              className={`${staatliches.className} font-semibold text-2xl  text-emerald-500 align-bottom h-full  `}
             >
               foreign / key
             </span>
           </Link>
           {/* Nav Links */}
           <div
-            className={` hidden md:flex items-center gap-6 ml-6 font-semibold text-stone-600 dark:text-white `}
+            className={` hidden md:flex items-center gap-6 ml-4 font-semibold text-stone-600 dark:text-white `}
           >
             <Link
               href={"/"}
-              className=" relative  font-normal group flex items-center px-2"
+              className=" relative  font-normal group flex items-center px-2 text-sm"
             >
               For You <GlobeIcon className="h-4 w-4 ml-1.5" />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-4  left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-5  left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
             <Link
               href={"/"}
-              className=" relative  font-normal group flex items-center px-2"
+              className=" relative  font-normal group flex items-center px-2 text-sm"
             >
               Explore <Compass className="h-4 w-4 ml-1.5" />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-4 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-5 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
             <Link
               href={"/"}
-              className=" relative  font-normal group flex items-center px-2"
+              className=" relative  font-normal group flex items-center px-2 text-sm"
             >
               Boards <Bookmark className="h-4 w-4 ml-1.5 " />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-4 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-5 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
             <Link
               href={"/"}
-              className=" relative  font-normal group flex items-center px-2"
+              className=" relative  font-normal group flex items-center px-2 text-sm"
             >
               Messages <MessagesSquare className="h-4 w-4 ml-1.5" />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-4 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-5 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Link href={"/create"}>
-            <Button
-              variant="ghost"
-              className="hidden md:block hover:bg-emerald-300 hover:text-emerald-900"
-            >
-              Share your work
-            </Button>
-          </Link>
-          <Button variant="ghost" size="icon" className="rounded-md">
+          {/* search bar  with magnifying glass icon inset inside*/}
+          <div className="hidden lg:flex items-center  px-3 bg-accent rounded-lg">
+            <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+            <input
+              type="text"
+              placeholder="Search"
+              className={cn(
+                "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 "
+              )}
+            />
+          </div>
+
+          <Button variant="ghost" size="icon" className="rounded-md lg:hidden">
             <MagnifyingGlassIcon className="h-5 w-5  text-accent-foreground " />
           </Button>
+          {session?.user && (
+            <Button variant="ghost" size="icon" className="rounded-md relative">
+              <Bell className="h-5 w-5  text-accent-foreground animate-bounce text-red-500" />
+              {/* badge for notificartion */}
+            </Button>
+          )}
           <ModeToggle />
           {session?.user ? (
             <UserMenu user={session.user} />

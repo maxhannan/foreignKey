@@ -17,12 +17,17 @@ const getBlurHash = async (src: string) => {
       Buffer.from(await res.arrayBuffer())
     );
 
-    const { base64 } = await getPlaiceholder(buffer);
-    console.log({ base64 });
-    return base64;
+    const imgData = await getPlaiceholder(buffer);
+
+    return imgData;
   } catch (err) {
     err;
   }
+};
+
+const gcd = (a: number, b: number): number => {
+  if (b === 0) return a;
+  return gcd(b, a % b);
 };
 
 export async function POST(req: Request) {
@@ -39,16 +44,53 @@ export async function POST(req: Request) {
     }
 
     const userid = session.user.id;
-    const blurHash = await getBlurHash(featuredImageUrl);
+    const imgData = await getBlurHash(featuredImageUrl);
 
-    if (!blurHash) {
+    if (!imgData) {
+      console.log("Could not generate blurhash");
       return new Response("Could not generate blurhash", { status: 500 });
     }
+    const formattedContent = {
+      ...content,
+      blocks: await Promise.all(
+        content.blocks.map(async (block: any) => {
+          console.log({ block });
+          if (block.type === "image") {
+            const imgMetaData = await getBlurHash(block.data.file.url);
+            console.log(block.data.file.url, "url");
 
+            if (!imgMetaData) {
+              console.log("Could not generate blurhash");
+              return new Response("Could not generate blurhash", {
+                status: 500,
+              });
+            }
+            return {
+              ...block,
+              data: {
+                ...block.data,
+                blurHash: imgMetaData.base64,
+                width: imgMetaData.metadata.width,
+                height: imgMetaData.metadata.height,
+                aspectRatio: `aspect-[${
+                  imgMetaData.metadata.width /
+                  gcd(imgMetaData.metadata.width, imgMetaData.metadata.height)
+                }/${
+                  imgMetaData.metadata.height /
+                  gcd(imgMetaData.metadata.width, imgMetaData.metadata.height)
+                }]`,
+              },
+            };
+          }
+          return block;
+        })
+      ),
+    };
+    console.log(formattedContent.blocks, "BLOCKS");
     await prisma.post.create({
       data: {
         title,
-        content,
+        content: formattedContent,
         subtitle,
         author: {
           connect: {
@@ -56,7 +98,7 @@ export async function POST(req: Request) {
           },
         },
         featuredImgSrc: featuredImageUrl,
-        featuredImgBlurHash: blurHash,
+        featuredImgBlurHash: imgData.base64,
       },
     });
     revalidatePath("/");

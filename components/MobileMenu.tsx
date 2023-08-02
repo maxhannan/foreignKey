@@ -30,39 +30,42 @@ function MobileMenu() {
         </SheetTrigger>
         <SheetContent
           side={"left"}
-          className=" md:w-0 md:opacity-0 w-full h-fit top-14 border-t border-accent p-4"
+          className=" md:w-0 md:opacity-0 h-fit w-full md:h-full top-14 border-t border-accent p-4"
         >
           <div className="flex flex-col gap-2">
             <Button
               variant="ghost"
-              className="py-6 flex justify-start gap-2 text-lg"
+              className="py-6 flex justify-start gap-2 text-sm"
             >
-              For You <GlobeIcon className="h-5 w-5 ml-1.5" />
+              For You <GlobeIcon className="h-4 w-4 ml-1.5" />
             </Button>
             <Button
               variant="ghost"
-              className="py-6 flex justify-start gap-2 text-lg"
+              className="py-6 flex justify-start gap-2 text-sm"
             >
               Explore <Compass className="h-4 w-4 ml-1.5" />
             </Button>
             <Button
               variant="ghost"
-              className="py-6 flex justify-start gap-2 text-lg"
+              className="py-6 flex justify-start gap-2 text-sm"
             >
               Messages <MessagesSquare className="h-4 w-4 ml-1.5" />
             </Button>
             <Button
               variant="ghost"
-              className="py-6 flex justify-start gap-2 text-lg"
+              className="py-6 flex justify-start gap-2 text-sm"
             >
               Boards <Bookmark className="h-4 w-4 ml-1.5" />
             </Button>
           </div>
           {/* divider */}
           <div className="border-t border-accent w-full my-3"></div>
-          {/* sign in  */}
+
+          <div className="border-t border-accent w-full my-3"></div>
+          {/* Social section */}
+
           <div className="flex flex-col gap-2">
-            <Button variant="secondary" className="py-6  gap-2 text-lg">
+            <Button variant="secondary" className="py-6  gap-2 text-base">
               Share your work
             </Button>
           </div>

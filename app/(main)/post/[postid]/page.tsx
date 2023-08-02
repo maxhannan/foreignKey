@@ -35,13 +35,13 @@ const PostPage: FC<Props> = async ({ params }) => {
   });
   if (!post) return notFound();
   return (
-    <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw] px-1.5 prose prose-stone dark:prose-invert mt-2 animate-in slide-in-from-bottom-96  duration-300 ">
-      <div className="not-prose mb-3 flex justify-between">
+    <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw] px-1.5 prose prose-stone dark:prose-invert mt-2   duration-300 break-words mb-4">
+      <div className=" mb-3 flex justify-between">
         <div>
-          <h1 className="text-4xl font-bold not-prose ">{post.title}</h1>
-          <h4 className="text-muted-foreground font-light not-prose text-xl">
+          <h1 className=" mb-2">{post.title}</h1>
+          <h5 className="text-muted-foreground font-light  text-xl">
             {post.subtitle}
-          </h4>
+          </h5>
         </div>
         {/* close button */}
         <BackButton />

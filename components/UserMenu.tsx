@@ -67,7 +67,7 @@ const UserMenu: FC<Props> = ({ user }) => {
             </span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup className="md:hidden">
+          <DropdownMenuGroup>
             <Link href={"/create"}>
               <Button
                 variant={"secondary"}
@@ -78,7 +78,8 @@ const UserMenu: FC<Props> = ({ user }) => {
               </Button>
             </Link>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator className="md:hidden" />
+
+          <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
               Profile
