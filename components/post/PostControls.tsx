@@ -29,7 +29,7 @@ const PostControls: FC<Props> = ({ author }) => {
 
   return (
     <div className="flex w-full items-center gap-2">
-      <Avatar className="h-5 w-5 ">
+      <Avatar className="h-6 w-6 ">
         <AvatarImage src={author.image || undefined} />
 
         <AvatarFallback className="bg-secondary">
@@ -39,12 +39,11 @@ const PostControls: FC<Props> = ({ author }) => {
           </span>
         </AvatarFallback>
       </Avatar>
-      <span className="text-gray-500 dark:text-gray-300 text-sm md:text-sm">
+      <span className="text-gray-500 dark:text-gray-300 text-xs md:text-base">
         {author.name}
       </span>
       <div className="ml-auto flex items-center gap-1">
         <Button
-          className="h-6 w-6"
           size={"icon"}
           variant={"ghost"}
           onClick={() => {
@@ -54,15 +53,14 @@ const PostControls: FC<Props> = ({ author }) => {
           {saved ? (
             <BookmarkFilledIcon
               className={cn(
-                "h-4 w-4 text-amber-400 dark:text-amber-400 transition-all animate-in zoom-in "
+                "h-5 w-5 text-amber-500 dark:text-amber-400 transition-all animate-in zoom-in "
               )}
             />
           ) : (
-            <BookmarkIcon className="h-4 w-4 text-gray-500 dark:text-gray-300  animate-in zoom-in " />
+            <BookmarkIcon className="h-5 w-5 text-gray-500 dark:text-gray-300  animate-in zoom-in " />
           )}
         </Button>
         <Button
-          className="h-6 w-6"
           size={"icon"}
           variant={"ghost"}
           onClick={() => {
@@ -72,13 +70,13 @@ const PostControls: FC<Props> = ({ author }) => {
           {liked ? (
             <HeartFilledIcon
               className={cn(
-                "absolute h-4 w-4 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180 "
+                "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180 "
               )}
             />
           ) : (
             <HeartIcon
               className={cn(
-                " h-4 w-4 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180   "
+                " h-5 w-5 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180   "
               )}
             />
           )}
@@ -91,7 +89,7 @@ const PostControls: FC<Props> = ({ author }) => {
             liked
               ? "text-pink-500 dark:text-pink-400"
               : "text-stone-500 dark:text-stone-300"
-          }  transition-colors duration-300 ease-in-out text-sm  `}
+          } px-2 py-1.5 rounded-md bg-stone-100 dark:bg-stone-800 transition-colors duration-300 ease-in-out  `}
         >
           {liked ? likes + 1 : likes}
         </span>
