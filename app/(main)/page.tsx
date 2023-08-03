@@ -14,10 +14,10 @@ export default async function Home() {
 
   return (
     // A grid of posts with a sidebar
-    <ScrollArea className="h-full w-full ">
+    <main>
       {/* @ts-ignore */}
 
       <PostFeed initialPosts={posts} />
-    </ScrollArea>
+    </main>
   );
 }

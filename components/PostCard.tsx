@@ -13,17 +13,16 @@ interface Props {
 
 const PostCard: FC<Props> = ({ post }) => {
   return (
-    <div className="bg-card  rounded-lg overflow-hidden relative flex flex-col gap-2 group animate-in fade-in duration-700">
+    <div className="bg-card  rounded-lg relative flex flex-col gap-2 group ">
       {/* container for image in card */}
-      <Link href={`/post/${post.id}`} replace={false}>
-        <div className=" relative h-[250px] rounded-lg overflow-hidden">
+      <Link href={`/post/${post.id}`}>
+        <div className=" relative h-[270px] rounded-lg overflow-hidden">
           <Image
             src={post.featuredImgSrc}
             alt="Next.js logo"
             className="object-cover"
             fill
             blurDataURL={post.featuredImgBlurHash}
-            sizes="(max-height: 300px) 100vw, "
             placeholder="blur"
           />
         </div>
