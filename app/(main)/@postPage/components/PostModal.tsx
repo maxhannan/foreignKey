@@ -49,7 +49,7 @@ const PostModal: FC<Props> = ({ children }) => {
     >
       {/* close button above modal */}
       <div
-        className="flex justify-end w-full items-center  h-[4vh]"
+        className="flex justify-end w-full items-center  h-[3.4rem]"
         onClick={onDismiss}
         ref={wrapper}
       >

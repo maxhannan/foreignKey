@@ -28,7 +28,7 @@ const page: FC<Props> = async ({ params }) => {
 
   return (
     <PostModal>
-      <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw] px-0 prose prose-stone dark:prose-invert mt-2   duration-300 break-words mb-4">
+      <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw] px-0 prose prose-stone dark:prose-invert mt-4   duration-300 break-words mb-8">
         <div className=" mb-3 flex justify-between px-4 lg:px-0">
           <div>
             <h1 className=" mb-1">{post.title}</h1>
