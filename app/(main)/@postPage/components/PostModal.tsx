@@ -45,7 +45,7 @@ const PostModal: FC<Props> = ({ children }) => {
   return (
     <div
       ref={overlay}
-      className="fixed z-50 left-0 right-0 top-0 bottom-0 mx-auto bg-black/50 backdrop-blur-sm"
+      className="fixed z-50 left-0 right-0 top-0 bottom-0 mx-auto bg-black/50 backdrop-blur-sm "
     >
       {/* close button above modal */}
       <div
@@ -57,8 +57,7 @@ const PostModal: FC<Props> = ({ children }) => {
           <XIcon className=" text-stone-300 transition-all animate-in zoom-in " />
         </Button>
       </div>
-      <div className="fixed bottom-0  left-0 h-[96vh] animate-in slide-in-from-bottom-96  fade-in-0 w-full bg-background  overflow-y-scroll rounded-t-md">
-        <div className="h-2"></div>
+      <div className="  animate-in slide-in-from-bottom-96 h-screen fade-in-0 w-full overflow-y-scroll bg-background  rounded-t-md">
         {children}
       </div>
     </div>

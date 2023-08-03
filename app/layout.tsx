@@ -24,10 +24,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={figtree.className}>
+      <body className={`${figtree.className} scrollbar-none`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
-            <main className="">
+            <main className="scrollbar-none">
               {authModal}
 
               <div className=" ">{children}</div>

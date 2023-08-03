@@ -1,5 +1,4 @@
 import NavBar from "@/components/NavBar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Layout({
   children,
@@ -9,11 +8,11 @@ export default function Layout({
   postPage: React.ReactNode;
 }) {
   return (
-    <ScrollArea className="h-screen w-full px-4 ">
+    <main className="">
       <NavBar />
-      <div className="h-16" />
+      <div className="h-16"></div>
       {postPage}
       {children}
-    </ScrollArea>
+    </main>
   );
 }
