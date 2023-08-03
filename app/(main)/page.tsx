@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     // A grid of posts with a sidebar
 
-    <main>
+    <main className="animate-in fade-in-0 duration-700">
       {/* @ts-ignore */}
 
       <PostFeed initialPosts={posts} />
