@@ -14,10 +14,8 @@ export default function Loading() {
             <Skeleton className="h-4 w-[200px]" />
           </div>
         </div>
-        <Skeleton className="h-4 w-full" />
-        {/* close button */}
       </div>
-
+      <Skeleton className="h-4 w-full" />
       <Skeleton className="relative overflow-hidden flex justify-center lg:rounded-lg aspect-[4/3]  not-prose mb-3 mt-3  " />
     </div>
   );
