@@ -21,8 +21,34 @@ const renderers = {
 
 const style = {
   paragraph: {
-    fontSize: "1.5rem",
-    lineHeight: "1.25rem",
+    marginLeft: "1rem",
+    marginRight: "1rem",
+  },
+  header: {
+    h1: {
+      marginLeft: "1rem",
+      marginRight: "1rem",
+    },
+    h2: {
+      marginLeft: "1rem",
+      marginRight: "1rem",
+    },
+    h3: {
+      marginLeft: "1rem",
+      marginRight: "1rem",
+    },
+    h4: {
+      marginLeft: "1rem",
+      marginRight: "1rem",
+    },
+    h5: {
+      marginLeft: "1rem",
+      marginRight: "1rem",
+    },
+    h6: {
+      marginLeft: "1rem",
+      marginRight: "1rem",
+    },
   },
 };
 interface Props {
@@ -30,7 +56,7 @@ interface Props {
 }
 
 const EditorOutput: FC<Props> = ({ content }) => {
-  return <Output className="text-sm " renderers={renderers} data={content} />;
+  return <Output renderers={renderers} style={style} data={content} />;
 };
 
 export default EditorOutput;

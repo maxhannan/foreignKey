@@ -50,7 +50,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
     data?.pages.flatMap((page) => page) ?? initialPosts.flatMap((page) => page);
   console.log(data?.pages.flatMap((page) => page));
   return (
-    <div className="mb-4 mt-2 xl:px-4">
+    <div className="mb-4 mt-2 px-2 xl:px-4">
       <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6  gap-6 gap-y-4 ">
         {posts &&
           posts.map((post, index) => {

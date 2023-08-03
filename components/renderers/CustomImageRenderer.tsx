@@ -9,7 +9,7 @@ function CustomImageRenderer({ data }: any) {
   return (
     <>
       {data.blurHash && data.aspectRatio ? (
-        <div className="relative rounded-lg overflow-hidden flex justify-center  bg-stone-100 dark:bg-stone-800 not-prose mb-4  ">
+        <div className="relative overflow-hidden flex justify-center lg:rounded-lg  bg-stone-100 dark:bg-stone-800 not-prose mb-3 mt-3  ">
           <Image
             alt="image"
             src={src}
@@ -18,7 +18,6 @@ function CustomImageRenderer({ data }: any) {
             quality={100}
             height={data.height}
             width={data.width}
-            onLoadingComplete={(img) => {}}
             sizes="100vw"
           />
         </div>

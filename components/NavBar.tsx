@@ -30,7 +30,7 @@ const NavBar: FC<Props> = async ({}) => {
       <div className="flex items-center justify-between  w-full   gap-2 px-2 xs:px-4 lg:px-8">
         <div className="flex items-center gap-1 ">
           <MobileMenu />
-          <Link href={"/"} className="pt-[1px]">
+          <Link href={"/"} className="md:pb-.5">
             <span
               className={`${staatliches.className} font-semibold text-2xl  text-emerald-500 align-bottom h-full  `}
             >

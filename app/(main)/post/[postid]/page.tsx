@@ -33,20 +33,20 @@ const PostPage: FC<Props> = async ({ params }) => {
       },
     },
   });
-  if (!post) return notFound();
+  if (!post) return null;
   return (
-    <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw] px-1.5 prose prose-stone dark:prose-invert mt-2   duration-300 break-words mb-4">
-      <div className=" mb-3 flex justify-between">
+    <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw] px-0 prose prose-stone dark:prose-invert mt-2   duration-300 break-words mb-4">
+      <div className=" mb-3 flex justify-between px-4 lg:px-0">
         <div>
-          <h1 className=" mb-2">{post.title}</h1>
-          <h5 className="text-muted-foreground font-light  text-xl">
+          <h1 className=" mb-1">{post.title}</h1>
+          <h5 className="text-muted-foreground font-light  text-lg">
             {post.subtitle}
           </h5>
         </div>
         {/* close button */}
         <BackButton />
       </div>
-      <div className="not-prose mb-3">
+      <div className="not-prose px-4 lg:px-0">
         <PostControls author={post.author} />
       </div>
 
