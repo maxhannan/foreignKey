@@ -10,13 +10,13 @@ export default function Loading() {
         <div className="flex items-center space-x-4">
           <div className="space-y-2">
             <Skeleton className="h-12 w-[350px]" />
-            <Skeleton className="h-6 w-[450px]" />
+            <Skeleton className="h-6 w-full" />
           </div>
         </div>
       </div>
-      <div className="flex gap-2">
-        <Skeleton className="h-8 w-8 rounded-full" />
-        <Skeleton className="h-8 w-full" />
+      <div className="flex gap-2  px-4 pr-6 lg:px-0 justify-between">
+        <Skeleton className="h-8 w-8 rounded-full flex-none" />
+        <Skeleton className="h-8 w-full  " />
       </div>
 
       <Skeleton className="relative overflow-hidden flex justify-center lg:rounded-lg aspect-[4/3]  not-prose mb-3 mt-3  " />
