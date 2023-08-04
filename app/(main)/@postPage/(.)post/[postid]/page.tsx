@@ -1,9 +1,10 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 import EditorOutput from "@/components/EditorOutput";
 import PostControls from "@/components/post/PostControls";
 import { prisma } from "@/lib/prisma";
 import type { FC } from "react";
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+
 interface Props {
   params: {
     postid: string;
