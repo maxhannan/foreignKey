@@ -148,3 +148,34 @@
 .image-tool__image {
   margin-bottom: 0;
 }
+.ce-block {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.ce-toolbar {
+  left: 0.75rem;
+}
+@media (max-width: 650px) {
+  .ce-toolbar {
+    margin-top: 0.25rem;
+  }
+}
+.codex-editor__redactor {
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  border: 1px hsl(60 4.8% 95.9%) solid;
+}
+.dark .codex-editor__redactor {
+  border: 1px hsl(12 6.5% 15.1%) solid;
+}
+
+.codex-editor--narrow .ce-block--focused {
+  margin-right: 0;
+  padding-right: 1rem;
+}
+.codex-editor {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}

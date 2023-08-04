@@ -97,7 +97,7 @@ const Editor: FC<Props> = ({}) => {
         onReady() {
           ref.current = editor;
         },
-        defaultBlock: "image",
+        defaultBlock: "paragraph",
         placeholder: "Type here to write your post...",
         inlineToolbar: true,
         data: { blocks: [] },
@@ -241,7 +241,8 @@ const Editor: FC<Props> = ({}) => {
 
               <div
                 id="editor"
-                className="min-h-[500px] w-full codex-editor--narrow "
+                className="min-h-[500px] w-full codex-editor--narrow 
+                "
               />
               <p className="text-sm text-gray-500">
                 Use{" "}
