@@ -14,8 +14,7 @@ interface Props {
     postid: string;
   };
 }
-
-export const getPost = async (id: string) => {
+const getPost = async (id: string) => {
   const post = await prisma.post.findUnique({
     where: {
       id: id,
