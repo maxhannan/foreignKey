@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     EmailProvider({
-      from: process.env.EMAIL_FROM!,
+      from: process.env.SMTP_FROM!,
       sendVerificationRequest,
     }),
   ],

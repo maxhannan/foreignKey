@@ -19,38 +19,7 @@ const renderers = {
   code: CustomCodeRenderer,
 };
 
-const style = {
-  paragraph: {
-    marginLeft: "1rem",
-    marginRight: "1rem",
-  },
-  header: {
-    h1: {
-      marginLeft: "1rem",
-      marginRight: "1rem",
-    },
-    h2: {
-      marginLeft: "1rem",
-      marginRight: "1rem",
-    },
-    h3: {
-      marginLeft: "1rem",
-      marginRight: "1rem",
-    },
-    h4: {
-      marginLeft: "1rem",
-      marginRight: "1rem",
-    },
-    h5: {
-      marginLeft: "1rem",
-      marginRight: "1rem",
-    },
-    h6: {
-      marginLeft: "1rem",
-      marginRight: "1rem",
-    },
-  },
-};
+const style = {};
 interface Props {
   content: any;
 }

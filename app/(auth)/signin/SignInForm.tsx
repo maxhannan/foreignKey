@@ -14,6 +14,7 @@ interface Props {}
 
 const SignInForm: FC<Props> = ({}) => {
   const [loggingIn, setLoggingIn] = useState(false);
+  const [email, setEmail] = useState("");
 
   return (
     <div className="container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
@@ -46,29 +47,23 @@ const SignInForm: FC<Props> = ({}) => {
                 Username
               </Label>
               <Input
-                id="username"
-                placeholder="Username"
-                type="text"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                type="email"
                 autoCapitalize="none"
                 autoCorrect="off"
                 disabled={loggingIn}
               />
             </div>
-            <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="password">
-                Password
-              </Label>
-              <Input
-                id="password"
-                placeholder="Password"
-                type="password"
-                autoCapitalize="none"
-                autoCorrect="off"
-                disabled={loggingIn}
-              />
-            </div>
-            <Button variant={"outline"} disabled={loggingIn}>
-              Sign In with Credentials
+
+            <Button
+              variant={"outline"}
+              onClick={() => signIn("email", { email })}
+              disabled={loggingIn}
+            >
+              Sign In with Email
             </Button>
           </div>
         </form>

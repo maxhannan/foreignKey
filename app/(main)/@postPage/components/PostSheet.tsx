@@ -14,7 +14,7 @@ import {
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -24,16 +24,28 @@ const PostSheet: FC<Props> = ({ children }) => {
   const [open, setOpen] = React.useState(true);
   const router = useRouter();
   const onOpenChange = (open: boolean) => {
-    if (open === false) {
-      router.back();
-    }
     setOpen(open);
   };
+  const ref = React.useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (open === false) {
+      setTimeout(() => {
+        router.back();
+      }, 300);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollTop = 0;
+    }
+  }, [open]);
   return (
     <Sheet defaultOpen open={open} onOpenChange={onOpenChange}>
       <SheetContent
+        ref={ref}
         side={"bottom"}
-        className="top-14 fixed h-full overflow-y-scroll px-0"
+        className="top-14 fixed h-full overflow-y-scroll px-0 "
       >
         {children}
       </SheetContent>

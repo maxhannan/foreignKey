@@ -29,8 +29,8 @@ const PostPageModal: FC<Props> = async ({ params }) => {
   if (!post) return null;
 
   return (
-    <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw] px-0 prose prose-stone dark:prose-invert mt-2  animate-in fade-in-0  duration-300 break-words mb-4">
-      <div className=" mb-3 flex justify-between px-4 lg:px-0">
+    <div className="container mx-auto  max-w-[1200px] lg:max-w-[70vw] 2xl:max-w-[55vw] 3xl:max-w-[40vw]  prose prose-stone dark:prose-invert mt-2  animate-in fade-in-0  duration-300 break-words mb-4 pb-16 px-4">
+      <div className=" mb-3 flex justify-between ">
         <div>
           <h1 className=" mb-1">{post.title}</h1>
           <h5 className="text-muted-foreground font-light  text-lg">
@@ -39,7 +39,7 @@ const PostPageModal: FC<Props> = async ({ params }) => {
         </div>
         {/* close button */}
       </div>
-      <div className="not-prose px-4 lg:px-0">
+      <div className="not-prose ">
         <PostControls author={post.author} />
       </div>
 

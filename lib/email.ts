@@ -1,74 +1,40 @@
 import { Theme } from "next-auth";
 import { SendVerificationRequestParams } from "next-auth/providers/email";
-import { Resend } from "resend";
-const apiKey = process.env.RESEND_API_KEY;
-if (!apiKey) throw new Error("Missing RESEND_API_KEY environment variable");
+import { Client } from "postmark";
+const apiKey = process.env.POSTMARK_API_TOKEN;
+if (!apiKey) throw new Error("Missing POSTMARK_API_TOKEN environment variable");
 
-const resend = new Resend(apiKey);
+const postmarkClient = new Client(apiKey);
 
 export default async function sendVerificationRequest(
   params: SendVerificationRequestParams
 ) {
   const { identifier, url, provider, theme } = params;
-  const { host } = new URL(url);
-  resend.emails.send({
-    to: identifier,
-    from: provider.from,
-    subject: `Sign in to ${host}`,
-    html: html({ url, host, theme }),
-    text: text({ url, host }),
+  const templateId = process.env.POSTMARK_SIGN_IN_TEMPLATE;
+
+  if (!templateId) {
+    throw new Error("Missing template id");
+  }
+  console.log({ identifier, url, provider, theme });
+  const result = await postmarkClient.sendEmailWithTemplate({
+    TemplateId: parseInt(templateId),
+    To: identifier,
+    From: "info@quenelle.app",
+    TemplateModel: {
+      action_url: url,
+      product_name: "foreignKey",
+    },
+    Headers: [
+      {
+        // Set this to prevent Gmail from threading emails.
+        // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
+        Name: "X-Entity-Ref-ID",
+        Value: new Date().getTime() + "",
+      },
+    ],
   });
-}
-
-function html(params: { url: string; host: string; theme: Theme }) {
-  const { url, host, theme } = params;
-
-  const escapedHost = host.replace(/\./g, "&#8203;.");
-
-  const brandColor = theme.brandColor || "#346df1";
-  const color = {
-    background: "#f9f9f9",
-    text: "#444",
-    mainBackground: "#fff",
-    buttonBackground: brandColor,
-    buttonBorder: brandColor,
-    buttonText: theme.buttonText || "#fff",
-  };
-
-  return `
-  <body style="background: ${color.background};">
-    <table width="100%" border="0" cellspacing="20" cellpadding="0"
-      style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
-      <tr>
-        <td align="center"
-          style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-          Sign in to <strong>${escapedHost}</strong>
-        </td>
-      </tr>
-      <tr>
-        <td align="center" style="padding: 20px 0;">
-          <table border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
-                  target="_blank"
-                  style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">Sign
-                  in</a></td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td align="center"
-          style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-          If you did not request this email you can safely ignore it.
-        </td>
-      </tr>
-    </table>
-  </body>
-  `;
-}
-
-/** Email Text body (fallback for email clients that don't render HTML, e.g. feature phones) */
-function text({ url, host }: { url: string; host: string }) {
-  return `Sign in to ${host}\n${url}\n\n`;
+  console.log({ result });
+  if (result.ErrorCode) {
+    throw new Error(result.Message);
+  }
 }
