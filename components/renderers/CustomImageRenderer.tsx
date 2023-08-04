@@ -9,7 +9,7 @@ function CustomImageRenderer({ data }: any) {
   return (
     <>
       {data.blurHash && data.aspectRatio ? (
-        <div className="relative overflow-hidden flex justify-center lg:rounded-lg  bg-stone-100 dark:bg-stone-800 not-prose mb-3 mt-3 mx-[-1rem] ">
+        <div className="relative overflow-hidden flex justify-center lg:rounded-lg  bg-stone-100 dark:bg-stone-800 not-prose mb-3 mt-3 mx-[-1rem] lg:mx-[-5rem] not-prose ">
           <Image
             alt="image"
             src={src}

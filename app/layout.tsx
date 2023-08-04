@@ -24,7 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${figtree.className} `}>
+      <body
+        className={`${figtree.className} scrollbar-thin scrollbar-thumb-stone-500 scrollbar-track-rounded-2xl scrollbar-track-accent  `}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
             <main className=" ">

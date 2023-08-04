@@ -24,16 +24,9 @@ const PostSheet: FC<Props> = ({ children }) => {
   const [open, setOpen] = React.useState(true);
   const router = useRouter();
   const onOpenChange = (open: boolean) => {
-    setOpen(open);
+    router.back();
   };
   const ref = React.useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (open === false) {
-      setTimeout(() => {
-        router.back();
-      }, 300);
-    }
-  }, [open]);
 
   useEffect(() => {
     if (ref.current) {
@@ -45,7 +38,7 @@ const PostSheet: FC<Props> = ({ children }) => {
       <SheetContent
         ref={ref}
         side={"bottom"}
-        className="top-14 fixed h-full overflow-y-scroll px-0 "
+        className="top-14 fixed h-full overflow-y-scroll px-0 scrollbar-thin scrollbar-thumb-stone-500 scrollbar-track-rounded-2xl  "
       >
         {children}
       </SheetContent>
