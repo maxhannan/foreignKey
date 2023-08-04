@@ -15,7 +15,7 @@ import { singleUpload } from "@/lib/imageupload";
 import { BlockMutationEvent } from "@editorjs/editorjs/types/events/block";
 import { useToast } from "./ui/use-toast";
 import CreateControls from "@/app/create/components/CreateControls";
-import { revalidatePath } from "next/cache";
+
 interface Props {}
 
 type FormData = z.infer<typeof PostValidator>;
@@ -149,6 +149,8 @@ const Editor: FC<Props> = ({}) => {
         });
       }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors]);
 
   useEffect(() => {
