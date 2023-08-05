@@ -4,6 +4,7 @@ import { authOptions } from "../auth/[...nextauth]/options";
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/lib/config";
 import { db } from "@/db";
+import { getAllPostsPaginated } from "@/db/posts";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -22,18 +23,9 @@ export async function GET(req: Request) {
         page: params.get("page"),
       });
 
-    const posts = await db.query.posts.findMany({
-      orderBy: (posts, { desc }) => [desc(posts.created_at)],
+    const posts = await getAllPostsPaginated({
       limit: parseInt(limit),
       offset: (parseInt(page) - 1) * parseInt(limit),
-      with: {
-        author: {
-          columns: {
-            name: true,
-            image: true,
-          },
-        },
-      },
     });
 
     return new Response(JSON.stringify(posts));

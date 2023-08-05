@@ -6,6 +6,7 @@ import type { FC } from "react";
 import PostHeading from "../../components/PostHeading";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
+import { getPostById } from "@/db/posts";
 
 interface Props {
   params: {
@@ -13,25 +14,8 @@ interface Props {
   };
 }
 
-const drizzlePost = async (id: string) => {
-  const post = await db.query.posts.findFirst({
-    where: (posts) => eq(posts.id, id),
-    with: {
-      author: {
-        columns: {
-          name: true,
-          id: true,
-          image: true,
-        },
-      },
-    },
-  });
-  return post;
-};
-export type PostType = Awaited<ReturnType<typeof drizzlePost>>;
-
 const PostPageModal: FC<Props> = async ({ params }) => {
-  const post = await drizzlePost(params.postid);
+  const post = await getPostById(params.postid);
   if (!post) return null;
 
   return (

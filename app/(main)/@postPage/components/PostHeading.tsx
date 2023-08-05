@@ -1,6 +1,6 @@
 "use client";
 import { useState, type FC } from "react";
-import { PostType } from "../(.)post/[postid]/page";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import { MessageCircleIcon, ShareIcon } from "lucide-react";
+import { PostType } from "@/db/posts";
 
 interface Props {
   post: PostType;

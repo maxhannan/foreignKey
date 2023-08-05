@@ -4,7 +4,8 @@ import Image from "next/image";
 import PostControls from "./post/PostControls";
 
 import Link from "next/link";
-import { PostType } from "@/app/(main)/@postPage/(.)post/[postid]/page";
+import { PostType } from "@/db/posts";
+
 interface Props {
   post: PostType;
 }

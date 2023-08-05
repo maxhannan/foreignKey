@@ -10,7 +10,7 @@ import { FC, useEffect, useRef } from "react";
 import PostCard from "../PostCard";
 
 import { Button } from "../ui/button";
-import { PostType } from "@/app/(main)/@postPage/(.)post/[postid]/page";
+import { PostType } from "@/db/posts";
 
 interface PostFeedProps {
   initialPosts: PostType[];
