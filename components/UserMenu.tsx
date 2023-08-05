@@ -1,5 +1,5 @@
 "use client";
-import { getUserByEmail } from "@/lib/user.server";
+
 import type { FC } from "react";
 import {
   DropdownMenu,

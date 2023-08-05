@@ -2,32 +2,24 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 import EditorOutput from "@/components/EditorOutput";
-import PostControls from "@/components/post/PostControls";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { prisma } from "@/lib/prisma";
-import { XIcon } from "lucide-react";
-import Link from "next/link";
-import { notFound } from "next/navigation";
+
 import type { FC } from "react";
-import BackButton from "../../components/BackButton";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import PostHeading from "../../@postPage/components/PostHeading";
+import { db } from "@/db";
+import { eq } from "drizzle-orm";
 
 interface Props {
   params: {
     postid: string;
   };
 }
-
-const PostPage: FC<Props> = async ({ params }) => {
-  const post = await prisma.post.findUnique({
-    where: {
-      id: params.postid,
-    },
-    include: {
+const drizzlePost = async (id: string) => {
+  const post = await db.query.posts.findFirst({
+    where: (posts) => eq(posts.id, id),
+    with: {
       author: {
-        select: {
+        columns: {
           name: true,
           id: true,
           image: true,
@@ -35,6 +27,10 @@ const PostPage: FC<Props> = async ({ params }) => {
       },
     },
   });
+  return post;
+};
+const PostPage: FC<Props> = async ({ params }) => {
+  const post = await drizzlePost(params.postid);
   if (!post) return null;
 
   return (

@@ -1,17 +1,16 @@
 import type { FC } from "react";
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+
 import PostControls from "./post/PostControls";
-import { EyeIcon } from "lucide-react";
-import { ExtendedPost } from "@/app/(main)/components/HomepageFeed";
+
 import Link from "next/link";
+import { PostType } from "@/app/(main)/@postPage/(.)post/[postid]/page";
 interface Props {
-  post: ExtendedPost;
+  post: PostType;
 }
 
 const PostCard: FC<Props> = ({ post }) => {
+  if (!post) return null;
   return (
     <div className="bg-card  rounded-lg relative flex flex-col gap-2 group ">
       {/* container for image in card */}

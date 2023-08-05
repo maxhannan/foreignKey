@@ -1,5 +1,3 @@
-import { prisma } from "@/lib/prisma";
-
 import {
   PostCreationRequestValidator,
   PostValidator,
@@ -10,6 +8,9 @@ import { authOptions } from "../../auth/[...nextauth]/options";
 
 import { getPlaiceholder } from "plaiceholder";
 import { revalidatePath } from "next/cache";
+import { db } from "@/db";
+import { posts } from "@/db/schema";
+import { createId } from "@paralleldrive/cuid2";
 
 const getBlurHash = async (src: string) => {
   try {
@@ -86,21 +87,35 @@ export async function POST(req: Request) {
         })
       ),
     };
-    console.log(formattedContent.blocks, "BLOCKS");
-    await prisma.post.create({
-      data: {
+    console.log(imgData.base64.length, "length");
+    try {
+      const post = await db.insert(posts).values({
+        id: createId(),
         title,
         content: formattedContent,
         subtitle,
-        author: {
-          connect: {
-            id: userid,
-          },
-        },
+        authorId: userid,
         featuredImgSrc: featuredImageUrl,
         featuredImgBlurHash: imgData.base64,
-      },
-    });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    // await prisma.post.create({
+    //   data: {
+    //     title,
+    //     content: formattedContent,
+    //     subtitle,
+    //     author: {
+    //       connect: {
+    //         id: userid,
+    //       },
+    //     },
+    //     featuredImgSrc: featuredImageUrl,
+    //     featuredImgBlurHash: imgData.base64,
+    //   },
+    // });
     revalidatePath("/");
     return new Response("OK");
   } catch (error) {

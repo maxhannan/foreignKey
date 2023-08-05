@@ -1,18 +1,19 @@
 "use client";
 
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/lib/config";
-import { ExtendedPost } from "@/app/(main)/components/HomepageFeed";
+
 import { useIntersection } from "@mantine/hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { FC, useEffect, useRef } from "react";
 import PostCard from "../PostCard";
-import { useSession } from "next-auth/react";
+
 import { Button } from "../ui/button";
+import { PostType } from "@/app/(main)/@postPage/(.)post/[postid]/page";
 
 interface PostFeedProps {
-  initialPosts: ExtendedPost[];
+  initialPosts: PostType[];
   subredditName?: string;
 }
 
@@ -20,7 +21,7 @@ const fetchPosts = async (page: number) => {
   const { data } = await axios.get(
     `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${page}}`
   );
-  return data as ExtendedPost[];
+  return data as PostType[];
 };
 
 const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
@@ -32,6 +33,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
 
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery(["todos"], ({ pageParam = 1 }) => fetchPosts(pageParam), {
+      retry: 3,
       getNextPageParam: (lastPage, allPages) => {
         const nextPage =
           lastPage.length === INFINITE_SCROLL_PAGINATION_RESULTS
@@ -49,7 +51,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
   const posts =
     data?.pages.flatMap((page) => page) ?? initialPosts.flatMap((page) => page);
   console.log(data?.pages.flatMap((page) => page));
-
+  if (posts.length < 1) return null;
   return (
     <div className="mb-4 mt-2 px-2 xl:px-4">
       <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6  gap-6 gap-y-4 animate-in fade-in duration-700 ">
@@ -57,13 +59,13 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
           posts.map((post, index) => {
             if (index === posts.length - 1) {
               return (
-                <div key={post.id} ref={ref}>
+                <div key={post!.id} ref={ref}>
                   <PostCard post={post} />
                 </div>
               );
             }
 
-            return <PostCard key={post.id} post={post} />;
+            return <PostCard key={post!.id} post={post} />;
           })}
       </div>
       {isFetchingNextPage && (

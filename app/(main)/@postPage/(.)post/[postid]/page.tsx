@@ -1,27 +1,24 @@
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 import EditorOutput from "@/components/EditorOutput";
-import PostControls from "@/components/post/PostControls";
-import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { get } from "http";
+
 import type { FC } from "react";
 import PostHeading from "../../components/PostHeading";
+import { db } from "@/db";
+import { eq } from "drizzle-orm";
 
 interface Props {
   params: {
     postid: string;
   };
 }
-const getPost = async (id: string) => {
-  const post = await prisma.post.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
+
+const drizzlePost = async (id: string) => {
+  const post = await db.query.posts.findFirst({
+    where: (posts) => eq(posts.id, id),
+    with: {
       author: {
-        select: {
+        columns: {
           name: true,
           id: true,
           image: true,
@@ -31,9 +28,10 @@ const getPost = async (id: string) => {
   });
   return post;
 };
-export type PostType = Prisma.PromiseReturnType<typeof getPost>;
+export type PostType = Awaited<ReturnType<typeof drizzlePost>>;
+
 const PostPageModal: FC<Props> = async ({ params }) => {
-  const post = await getPost(params.postid);
+  const post = await drizzlePost(params.postid);
   if (!post) return null;
 
   return (

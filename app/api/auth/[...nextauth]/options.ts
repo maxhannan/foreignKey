@@ -1,13 +1,15 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import EmailProvider from "next-auth/providers/email";
-import { prisma } from "@/lib/prisma";
+
 import sendVerificationRequest from "@/lib/email";
-import { nanoid } from "nanoid";
+
+import { DrizzleAdapter } from "@/lib/auth/drizzle-adapter";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET!,
   debug: process.env.NODE_ENV === "development",
@@ -34,7 +36,8 @@ export const authOptions: NextAuthOptions = {
       sendVerificationRequest,
     }),
   ],
-  adapter: PrismaAdapter(prisma),
+  // @ts-ignore
+  adapter: DrizzleAdapter(db),
   callbacks: {
     async session({ token, session }) {
       if (token) {
@@ -48,27 +51,18 @@ export const authOptions: NextAuthOptions = {
     },
 
     async jwt({ token, user }) {
-      const dbUser = await prisma.user.findFirst({
-        where: {
-          email: token.email,
-        },
-      });
+      const [dbUser] = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, token.email || ""))
+        .limit(1);
 
       if (!dbUser) {
-        token.id = user!.id;
+        if (user) {
+          token.id = user?.id;
+        }
         return token;
       }
-      if (!dbUser.username) {
-        await prisma.user.update({
-          where: {
-            id: dbUser.id,
-          },
-          data: {
-            username: nanoid(10),
-          },
-        });
-      }
-
       return {
         id: dbUser.id,
         name: dbUser.name,

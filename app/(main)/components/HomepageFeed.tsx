@@ -1,38 +1,29 @@
 import PostFeed from "@/components/post/PostFeed";
+import { db } from "@/db";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/lib/config";
-import { prisma } from "@/lib/prisma";
-import { Post, Prisma, User } from "@prisma/client";
 
-export const getPosts = async () => {
-  const posts = await prisma.post.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
+import { desc } from "drizzle-orm";
+
+export const getPostsDrizzle = async () => {
+  const posts = await db.query.posts.findMany({
+    orderBy: (posts, { desc }) => [desc(posts.created_at)],
+    with: {
       author: {
-        select: {
+        columns: {
+          id: true,
           name: true,
           image: true,
         },
       },
     },
-
-    take: INFINITE_SCROLL_PAGINATION_RESULTS, // 4 to demonstrate infinite scroll, should be higher in production
+    limit: INFINITE_SCROLL_PAGINATION_RESULTS,
+    offset: 0,
   });
   return posts;
 };
 
-export type ExtendedPost = Post & {
-  author: {
-    name: string;
-    image: string;
-  };
-};
-
 const HomePageFeed = async () => {
-  const posts = await getPosts();
-  // @ts-ignore
-  return <PostFeed initialPosts={posts} />;
+  return null;
 };
 
 export default HomePageFeed;
