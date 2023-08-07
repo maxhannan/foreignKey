@@ -19,7 +19,7 @@ const PostPageModal: FC<Props> = async ({ params }) => {
   if (!post) return null;
 
   return (
-    <div className="container mx-auto  max-w-[1200px]   2xl:max-w-[75vw] 4xl:max-w-[45vw]    prose prose-stone dark:prose-invert mt-2  animate-in fade-in-0  duration-300 break-words mb-4 pb-16 px-4 lg:px-20">
+    <div className="container mx-auto  max-w-[100vw] lg:max-w-[75vw]  xl:max-w-[65vw] 2xl:max-w-[55vw]  3xl:max-w-[45vw]  prose prose-stone dark:prose-invert mt-2  animate-in fade-in-0  duration-300 break-words mb-4 pb-16 px-4 lg:px-24">
       <PostHeading post={post} />
       <EditorOutput content={post.content} />
     </div>
