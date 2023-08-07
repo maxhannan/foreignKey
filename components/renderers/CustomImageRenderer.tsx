@@ -19,7 +19,7 @@ function CustomImageRenderer({ data }: any) {
   return (
     <>
       <Dialog>
-        <DialogContent className={` not-prose     p-0 mb-0`}>
+        <DialogContent className={` not-prose     p-0 mb-0 overflow-hidden`}>
           <div
             className={` not-prose    ${data.aspectRatio}   max-h-[95vh] bg-stone-100 dark:bg-stone-800 `}
           >
@@ -29,6 +29,7 @@ function CustomImageRenderer({ data }: any) {
               blurDataURL={data.blurHash}
               placeholder="blur"
               quality={100}
+              className="object-contain max-h-[95vh]"
               height={data.height}
               width={data.width}
               sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 75vw, (max-width: 1700px) 65vw,  45vw"
