@@ -30,7 +30,7 @@ function MobileMenu() {
         </SheetTrigger>
         <SheetContent
           side={"left"}
-          className=" md:w-0 md:opacity-0 h-fit w-full md:h-full top-14 border-t border-accent p-4"
+          className=" md:w-0 md:opacity-0 h-fit w-full md:h-full top-14 border-t border-accent p-4 data-[state=open]:zoom-in data-[state=open]:fade-in "
         >
           <div className="flex flex-col gap-2">
             <Button
@@ -59,16 +59,6 @@ function MobileMenu() {
             </Button>
           </div>
           {/* divider */}
-          <div className="border-t border-accent w-full my-3"></div>
-
-          <div className="border-t border-accent w-full my-3"></div>
-          {/* Social section */}
-
-          <div className="flex flex-col gap-2">
-            <Button variant="secondary" className="py-6  gap-2 text-base">
-              Share your work
-            </Button>
-          </div>
         </SheetContent>
       </Sheet>
     </div>

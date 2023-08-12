@@ -1,12 +1,10 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Label } from "@radix-ui/react-dropdown-menu";
+
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import React, { useEffect } from "react";
-import { set } from "zod";
 
 interface Props {
   children: React.ReactNode;
@@ -34,7 +32,7 @@ const PostSheet: FC<Props> = ({ children }) => {
       <SheetContent
         ref={ref}
         side={"fullScreen"}
-        className="overflow-y-scroll px-0 scrollbar-thin scrollbar-thumb-stone-500 scrollbar-track-rounded-2xl  "
+        className="overflow-y-scroll px-0 scrollbar-thin scrollbar-thumb-stone-500 scrollbar-track-rounded-2xl   "
       >
         {children}
       </SheetContent>

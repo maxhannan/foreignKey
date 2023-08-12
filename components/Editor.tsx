@@ -218,7 +218,7 @@ const Editor: FC<Props> = ({}) => {
     <>
       <CreateControls submitting={isLoading || isSubmitting} />
       <div className="flex flex-col items-center gap-6 max-w-[850px] mx-auto ">
-        <div className="w-full  lg:max-w-[850px] p-2 bg-background rounded-lg ">
+        <div className="w-full  lg:max-w-[850px] p-2  bg-background rounded-lg ">
           <form
             id="post-form"
             className=" mx-auto"
@@ -233,12 +233,12 @@ const Editor: FC<Props> = ({}) => {
                 }}
                 {...rest}
                 placeholder="Title"
-                className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none py-2"
+                className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none pl-2.5 py-2"
               />
               <input
                 {...register("subtitle")}
                 placeholder="Subtitle"
-                className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-normal text-muted-foreground focus:outline-none mb-2"
+                className="w-full resize-none appearance-none overflow-hidden bg-transparent text-3xl font-normal text-muted-foreground   pl-2.5 focus:outline-none mb-2"
               />
 
               <div

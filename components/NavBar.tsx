@@ -27,10 +27,10 @@ const NavBar: FC<Props> = async ({}) => {
 
   return (
     <nav className="w-screen min-h-14 h-14  bg-background shadow-sm flex fixed top-0 right-0 left-0  z-50 ">
-      <div className="flex items-center justify-between  w-full   gap-2 px-2 xs:px-4 lg:px-8">
+      <div className="flex items-center justify-between  w-full   gap-2 px-2 xl:px-4">
         <div className="flex items-center gap-1 ">
           <MobileMenu />
-          <Link href={"/"} className="md:pb-.5">
+          <Link href={"/"} className="md:pb-.5 pt-.5 md:pt-0 ">
             <span
               className={`${staatliches.className} font-semibold text-2xl  text-emerald-500 align-bottom h-full  `}
             >
