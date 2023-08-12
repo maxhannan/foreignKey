@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:push": "drizzle-kit push:mysql --config=drizzle.config.ts"
+    "db:push": "drizzle-kit push:mysql --config=drizzle.config.ts",
+    "db:pull": "drizzle-kit introspect:mysql --config=drizzle.config.ts"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^0.3.0",
     "@editorjs/code": "^2.8.0",
     "@editorjs/editorjs": "^2.27.0",
     "@editorjs/embed": "^2.5.3",

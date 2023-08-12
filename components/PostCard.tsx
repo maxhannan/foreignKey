@@ -13,7 +13,7 @@ interface Props {
 const PostCard: FC<Props> = ({ post }) => {
   if (!post) return null;
   return (
-    <div className="bg-card  rounded-lg relative flex flex-col gap-2 group ">
+    <div className="bg-card  rounded-lg relative flex flex-col gap-2 group animate-in fade-in duration-700 ">
       {/* container for image in card */}
       <Link href={`/post/${post.id}`}>
         <div className=" relative h-[270px] rounded-lg overflow-hidden">

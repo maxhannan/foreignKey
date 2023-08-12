@@ -54,17 +54,9 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
   if (posts.length < 1) return null;
   return (
     <div className="mb-4 mt-2 px-2 xl:px-4">
-      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6  gap-6 gap-y-4 animate-in fade-in duration-700 ">
+      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6  gap-6 gap-y-4  ">
         {posts &&
           posts.map((post, index) => {
-            if (index === posts.length - 1) {
-              return (
-                <div key={post!.id} ref={ref}>
-                  <PostCard post={post} />
-                </div>
-              );
-            }
-
             return <PostCard key={post!.id} post={post} />;
           })}
       </div>
@@ -77,6 +69,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
         <div className="flex justify-center">
           <Button
             variant="ghost"
+            ref={ref}
             onClick={() => {
               fetchNextPage();
             }}
