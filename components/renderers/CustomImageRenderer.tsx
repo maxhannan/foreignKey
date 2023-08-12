@@ -14,8 +14,7 @@ import { Input } from "../ui/input";
 
 function CustomImageRenderer({ data }: any) {
   const src = data.file.url;
-  console.log({ data });
-  console.log(data.blurHash);
+
   return (
     <div className="relative overflow-hidden flex justify-center lg:rounded-lg  bg-stone-100 dark:bg-stone-800 not-prose mb-3 mt-3 mx-[-1rem] lg:mx-[-5rem] not-prose ">
       <Image

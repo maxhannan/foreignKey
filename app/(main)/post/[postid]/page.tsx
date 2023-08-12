@@ -22,7 +22,7 @@ const PostPage: FC<Props> = async ({ params }) => {
 
   return (
     <div className="container mx-auto  max-w-[1200px]  2xl:max-w-[60vw] 3xl:max-w-[45vw]  prose prose-stone dark:prose-invert mt-2  animate-in fade-in-0  duration-300 break-words mb-4 pb-16 px-4 lg:px-24">
-      <PostHeading post={post} />
+      <div></div>
 
       <EditorOutput content={post.content} />
     </div>

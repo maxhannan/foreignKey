@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FC } from "react";
+import { useState, type FC, RefObject } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -14,17 +14,20 @@ import {
 import { cn } from "@/lib/utils";
 import { MessageCircleIcon, ShareIcon } from "lucide-react";
 import { PostType } from "@/db/posts";
-
+import SideMenu from "./SideMenu";
+import { forwardRef } from "react";
 interface Props {
   post: PostType;
+  ref: (element: any) => void;
 }
 
-const PostHeading: FC<Props> = ({ post }) => {
+const PostHeading = forwardRef(function PostHeading({ post }: Props, ref) {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(1234);
   const [saved, setSaved] = useState(false);
+  // fixed top-14 border-t left-0 right-0   z-50 bg-background px-4 p-2
   return (
-    <div className="flex   gap-4 flex-col not-prose justify-between">
+    <div className="flex   gap-4 flex-col not-prose justify-between ">
       <div className="flex gap-4 items-center">
         {" "}
         <div className="">
@@ -48,8 +51,12 @@ const PostHeading: FC<Props> = ({ post }) => {
           </span>
         </div>
       </div>
-      <div className=" flex items-center gap-1 justify-between w-full">
-        <div className="mr-auto flex gap-2">
+      <div
+        className=" flex items-center gap-1 justify-between "
+        // @ts-expect-error
+        ref={ref}
+      >
+        <div className="mr-auto flex gap-2 bg-background">
           <Button
             size={"icon"}
             variant={"outline"}
@@ -159,6 +166,6 @@ const PostHeading: FC<Props> = ({ post }) => {
       </div>
     </div>
   );
-};
+});
 
 export default PostHeading;

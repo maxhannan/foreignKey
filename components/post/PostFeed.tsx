@@ -50,7 +50,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
 
   const posts =
     data?.pages.flatMap((page) => page) ?? initialPosts.flatMap((page) => page);
-  console.log(data?.pages.flatMap((page) => page));
+
   if (posts.length < 1) return null;
   return (
     <div className="mb-4 mt-2 px-2 xl:px-4">
