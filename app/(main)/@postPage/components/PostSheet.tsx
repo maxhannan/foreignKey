@@ -32,7 +32,7 @@ const PostSheet: FC<Props> = ({ children }) => {
       <SheetContent
         ref={ref}
         side={"fullScreen"}
-        className="overflow-y-scroll px-0      "
+        className="overflow-y-scroll px-0 scrollbar-none lg:scrollbar-thin     "
       >
         {children}
       </SheetContent>
