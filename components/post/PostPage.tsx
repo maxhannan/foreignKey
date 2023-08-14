@@ -1,9 +1,8 @@
-import PostHeading from "@/app/(main)/@postPage/components/PostHeading";
-import SideMenu from "@/app/(main)/@postPage/components/SideMenu";
-import { useRef, type FC, Fragment } from "react";
+import PostHeading from "./PostHeading";
+
+import { type FC } from "react";
 import EditorOutput from "../EditorOutput";
 import { PostType } from "@/db/posts";
-import { useIntersection } from "@mantine/hooks";
 
 interface Props {
   post: PostType;

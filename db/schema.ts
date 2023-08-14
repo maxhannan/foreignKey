@@ -140,7 +140,7 @@ export const likes = mysqlTable(
     postIdIndex: index("likes__postId__idx").on(like.postId),
   })
 );
-
+export type Like = InferModel<typeof likes>;
 export const comments = mysqlTable(
   "comments",
   {

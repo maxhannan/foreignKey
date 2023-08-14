@@ -1,16 +1,21 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import { PostType } from "@/db/posts";
 
 import UserPopover from "./UserPopover";
 
 import PostButtons from "./PostButtons";
 import UserPopoverServer from "./UserPopoverServer";
+import { db } from "@/db";
+import { eq } from "drizzle-orm";
 interface Props {
   post: PostType;
 }
 
-function PostHeading({ post }: Props) {
+async function PostHeading({ post }: Props) {
+  if (!post) return null;
+  const likes = await db.query.likes.findMany({
+    where: (likes) => eq(likes.postId, post.id),
+  });
+  console.log({ likes });
   return (
     <div className="flex   gap-4 flex-col not-prose justify-between ">
       <div className="flex gap-4 items-center">
@@ -29,7 +34,7 @@ function PostHeading({ post }: Props) {
         </div>
       </div>
 
-      <PostButtons post={post} />
+      <PostButtons post={post} likesArr={likes} />
     </div>
   );
 }

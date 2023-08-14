@@ -1,4 +1,4 @@
-import PostSheet from "../../components/PostSheet";
+import PostSheet from "@/components/post/PostSheet";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
