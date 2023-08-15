@@ -8,12 +8,13 @@ import {
   InfoCircledIcon,
   Share2Icon,
 } from "@radix-ui/react-icons";
-import type { Dispatch, FC, SetStateAction } from "react";
+import { useContext, type Dispatch, type FC, type SetStateAction } from "react";
 import UserPopover from "./UserPopover";
 import UserPopoverServer from "./UserPopoverServer";
 import { cn } from "@/lib/utils";
 import { MessageCircleIcon, ShareIcon } from "lucide-react";
 import { LikeButton } from "./PostButtons";
+import PingContext from "./CommentContext";
 
 interface Props {
   post: PostType;
@@ -33,7 +34,9 @@ const SideMenu: FC<Props> = ({
   isOnScreen,
   likes,
 }) => {
-  console.log({ isOnScreen });
+  const CommentContext = useContext(PingContext);
+  console.log({ CommentContext });
+  const { ping, setPing } = CommentContext!;
   return (
     <div
       className={cn(
@@ -62,7 +65,7 @@ const SideMenu: FC<Props> = ({
         size={"icon"}
         variant={"outline"}
         onClick={() => {
-          setLiked(!liked);
+          setPing(!ping);
         }}
       >
         {liked ? (

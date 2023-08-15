@@ -31,7 +31,7 @@ const PostCard: FC<Props> = ({ post }) => {
       <div className="  pb-4 flex gap-1 flex-col group">
         <PostControls author={post.author} />
         <Link href={`/post/${post.id}`}>
-          <h2 className="text-base font-semibold text-stone-800 dark:text-white">
+          <h2 className="text-sm md:text-base font-semibold text-stone-800 dark:text-white">
             {post.title} -{" "}
             <span className="text-stone-500 font-normal">{post.subtitle}</span>
           </h2>

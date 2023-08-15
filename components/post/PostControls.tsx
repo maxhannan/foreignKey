@@ -39,7 +39,7 @@ const PostControls: FC<Props> = ({ author }) => {
           </span>
         </AvatarFallback>
       </Avatar>
-      <span className="text-gray-500 dark:text-gray-300 text-xs md:text-base">
+      <span className="text-gray-500 dark:text-gray-300 text-sm md:text-base">
         {author.name}
       </span>
       <div className="ml-auto flex items-center gap-1">
@@ -84,15 +84,6 @@ const PostControls: FC<Props> = ({ author }) => {
           <span className="sr-only">Toggle theme</span>
         </Button>
         {/* Like count */}
-        <span
-          className={`${
-            liked
-              ? "text-pink-500 dark:text-pink-400"
-              : "text-stone-500 dark:text-stone-300"
-          } px-2 py-1.5 rounded-md bg-stone-100 dark:bg-stone-800 transition-colors duration-300 ease-in-out  `}
-        >
-          {liked ? likes + 1 : likes}
-        </span>
       </div>
     </div>
   );

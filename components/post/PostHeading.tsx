@@ -6,6 +6,11 @@ import PostButtons from "./PostButtons";
 import UserPopoverServer from "./UserPopoverServer";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
+import { Suspense } from "react";
+import UserPopoverSkeleton from "./UserPopoverSkeleton";
+import CommentSheet from "./CommentSheet";
+import CommentSectionServer from "./CommentSectionServer";
+import CommentContextProvider from "./CommentContextProvider";
 interface Props {
   post: PostType;
 }
@@ -21,7 +26,9 @@ async function PostHeading({ post }: Props) {
       <div className="flex gap-4 items-center">
         <div className="">
           <UserPopover post={post}>
-            <UserPopoverServer post={post} />
+            <Suspense fallback={<UserPopoverSkeleton />}>
+              <UserPopoverServer post={post} />
+            </Suspense>
           </UserPopover>
         </div>
         <div className="flex flex-col justify-center mr-8">
@@ -29,12 +36,18 @@ async function PostHeading({ post }: Props) {
             {post!.title}
           </span>
           <span className="text-gray-500 dark:text-gray-300 text-xs flex-none">
-            {post!.author.name}
+            {post!.subtitle}
           </span>
         </div>
       </div>
-
-      <PostButtons post={post} likesArr={likes} />
+      <CommentContextProvider>
+        <PostButtons post={post} likesArr={likes} />
+        <CommentSheet>
+          <Suspense fallback={<UserPopoverSkeleton />}>
+            <CommentSectionServer post={post} />
+          </Suspense>
+        </CommentSheet>
+      </CommentContextProvider>
     </div>
   );
 }

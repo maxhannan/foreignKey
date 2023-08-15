@@ -3,6 +3,7 @@ import {
   Dispatch,
   FC,
   SetStateAction,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -26,6 +27,8 @@ import { useOnScreen } from "@/hooks/useOnScreen";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Like } from "@/db/schema";
 import { useSession } from "next-auth/react";
+import { useIntersection } from "@mantine/hooks";
+import PingContext from "./CommentContext";
 interface Props {
   post: PostType;
   likesArr: Like[];
@@ -39,19 +42,22 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
   const [likes, setLikes] = useState(likesArr.length);
   const [saved, setSaved] = useState(false);
 
-  const ref = useRef<HTMLDivElement>(null);
-  console.log(ref.current);
-  const isOnScreen = useOnScreen(ref);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  const { ref, entry } = useIntersection({
+    root: containerRef.current,
+    threshold: 1,
+  });
+  let isOnScreen = entry?.isIntersecting;
   return (
     <>
-      {!ref.current ? null : (
+      {entry && (
         <SideMenu
           post={post}
           saved={saved}
           likes={likes}
           liked={liked}
-          isOnScreen={isOnScreen}
+          isOnScreen={entry?.isIntersecting}
           setSaved={setSaved}
           setLiked={setLiked}
         />
@@ -72,24 +78,25 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
         />
       </div>
 
-      {isOnScreen || !ref.current ? null : (
-        <div
-          className={cn(
-            "flex lg:hidden items-center gap-1 justify-between fixed top-14 left-0 w-full bg-background/90 backdrop-blur-xl z-50 p-3 animate-in fade-in-0  duration-300 px-4 border-t shadow-md  "
-          )}
-        >
-          <PostButtonHeading
-            post={post}
-            saved={saved}
-            side="bottom"
-            liked={liked}
-            likes={likes}
-            setLikes={setLikes}
-            setSaved={setSaved}
-            setLiked={setLiked}
-          />
-        </div>
-      )}
+      {isOnScreen ||
+        (entry && (
+          <div
+            className={cn(
+              "flex lg:hidden items-center gap-1 justify-between fixed top-14 left-0 w-full bg-background/90 backdrop-blur-xl z-50 p-3 animate-in fade-in-0  duration-300 px-4 border-t shadow-md  "
+            )}
+          >
+            <PostButtonHeading
+              post={post}
+              saved={saved}
+              side="bottom"
+              liked={liked}
+              likes={likes}
+              setLikes={setLikes}
+              setSaved={setSaved}
+              setLiked={setLiked}
+            />
+          </div>
+        ))}
     </>
   );
 };
@@ -114,6 +121,10 @@ const PostButtonHeading: FC<PostButtonProps> = ({
   setSaved,
   setLiked,
 }) => {
+  const CommentContext = useContext(PingContext);
+  console.log({ CommentContext });
+  const { ping, setPing } = CommentContext!;
+
   return (
     <>
       <div className="mr-auto flex gap-2 ">
@@ -140,7 +151,7 @@ const PostButtonHeading: FC<PostButtonProps> = ({
           variant={"outline"}
           className="bg-transparent"
           onClick={() => {
-            setLiked(!liked);
+            setPing(!ping);
           }}
         >
           {liked ? (

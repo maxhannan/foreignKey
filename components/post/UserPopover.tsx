@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { PostType } from "@/db/posts";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { Suspense, type FC } from "react";
+import type { FC } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -32,8 +32,12 @@ const UserPopover: FC<Props> = ({ children, side, post }) => {
           </AvatarFallback>
         </Avatar>
       </PopoverTrigger>
-      <PopoverContent side={side} align="start" className="w-fit">
-        <Suspense fallback={<div>loading</div>}>{children}</Suspense>
+      <PopoverContent
+        side={side}
+        align="start"
+        className="w-fit max-w-[92vw] flex"
+      >
+        {children}
       </PopoverContent>
     </Popover>
   );

@@ -47,13 +47,14 @@ const UserPopoverServer: FC<Props> = async ({ post }) => {
         {userInfo!.posts.map((post) => (
           <div className="flex flex-col gap-2" key={post.id}>
             <div className="flex flex-col gap-2">
-              <div className="h-[80px] w-[120px] lg:h-[160px] lg:w-[240px] relative">
+              <div className=" relative flex">
                 <Link href={`/post/${post.id}`} replace>
                   <Image
                     src={post.featuredImgSrc}
                     alt=""
                     className="object-cover"
-                    fill
+                    height={144}
+                    width={180}
                     placeholder="blur"
                     blurDataURL={post.featuredImgBlurHash}
                   />

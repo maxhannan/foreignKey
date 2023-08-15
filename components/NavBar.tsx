@@ -30,16 +30,16 @@ const NavBar: FC<Props> = async ({}) => {
       <div className="flex items-center justify-between  w-full   gap-2 px-2 xl:px-4">
         <div className="flex items-center gap-1 ">
           <MobileMenu />
-          <Link href={"/"} className="md:pb-.5 pt-.5 md:pt-0 ">
+          <Link href={"/"} className="  ">
             <span
-              className={`${staatliches.className} font-semibold text-2xl  text-emerald-500 align-bottom h-full  `}
+              className={` font-semibold text-2xl  text-emerald-500  h-full  `}
             >
               foreign / key
             </span>
           </Link>
           {/* Nav Links */}
           <div
-            className={` hidden md:flex items-center gap-6 ml-4 font-semibold text-stone-600 dark:text-white `}
+            className={` hidden md:flex items-center gap-6 ml-4 mt-1  font-semibold text-stone-600 dark:text-white `}
           >
             <Link
               href={"/"}
@@ -47,7 +47,7 @@ const NavBar: FC<Props> = async ({}) => {
             >
               For You <GlobeIcon className="h-4 w-4 ml-1.5" />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-5  left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-[18px]  left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
             <Link
               href={"/"}
@@ -55,7 +55,7 @@ const NavBar: FC<Props> = async ({}) => {
             >
               Explore <Compass className="h-4 w-4 ml-1.5" />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-5 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-[18px] left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
             <Link
               href={"/"}
@@ -63,7 +63,7 @@ const NavBar: FC<Props> = async ({}) => {
             >
               Boards <Bookmark className="h-4 w-4 ml-1.5 " />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-5 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-[18px] left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
             <Link
               href={"/"}
@@ -71,7 +71,7 @@ const NavBar: FC<Props> = async ({}) => {
             >
               Messages <MessagesSquare className="h-4 w-4 ml-1.5" />
               {/* hover animated undelrine */}
-              <div className="absolute -bottom-5 left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
+              <div className="absolute -bottom-[18px] left-0 w-full h-[2px] bg-emerald-500 rounded-full transform scale-x-0 transition-all group-hover:scale-x-100"></div>
             </Link>
           </div>
         </div>
