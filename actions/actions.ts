@@ -2,10 +2,12 @@
 
 import { likePost, unlikePost } from "@/db/posts";
 import { NewLike } from "@/db/schema";
+import { revalidatePath } from "next/cache";
 
 export const likePostAction = async (newLike: NewLike) => {
   const res = await likePost(newLike);
   console.log({ res });
+  revalidatePath(`/posts/[postid]`);
   return null;
 };
 
@@ -22,6 +24,6 @@ export const unlikePostAction = async ({
   } catch (error) {
     console.error(error);
   }
-
+  revalidatePath(`/posts/[postid]`);
   return null;
 };

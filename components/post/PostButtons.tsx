@@ -44,25 +44,29 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
   const [saved, setSaved] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const [optomisticLikes, setLikes] = useState(likesArr);
-  const setOptomisticLikes = (like: {
-    id: string;
-    userId: string;
-    postId: string;
-    addLike: boolean;
-  }) => {
-    if (like.addLike) {
-      setLikes([
-        ...optomisticLikes,
-        { id: like.id, userId: like.userId, postId: like.postId },
-      ]);
-    } else {
-      let newState = [...optomisticLikes].filter(
-        (like) => like.userId !== user?.id
-      );
-      setLikes(newState);
+  const [optomisticLikes, setOptomisticLikes] = useOptimistic(
+    likesArr,
+    (
+      state,
+      like: {
+        id: string;
+        userId: string;
+        postId: string;
+        addLike: boolean;
+      }
+    ) => {
+      if (like.addLike) {
+        return [
+          ...state,
+          { id: like.id, userId: like.userId, postId: like.postId },
+        ];
+      } else {
+        let newState = [...state].filter((like) => like.userId !== user?.id);
+        return newState;
+      }
     }
-  };
+  );
+
   console.log({ optomisticLikes });
   const liked = optomisticLikes.find((l) => l.userId === user?.id)
     ? true
