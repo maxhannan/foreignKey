@@ -7,8 +7,9 @@ import {
   useEffect,
   useRef,
   useState,
+  useTransition,
 } from "react";
-
+import { experimental_useOptimistic as useOptimistic } from "react";
 import { Button } from "@/components/ui/button";
 import {
   BookmarkFilledIcon,
@@ -19,8 +20,8 @@ import {
   Share2Icon,
 } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-import { MessageCircleIcon, ShareIcon } from "lucide-react";
-import { PostType } from "@/db/posts";
+import { CircleDashed, MessageCircleIcon, ShareIcon } from "lucide-react";
+import { PostType, unlikePost } from "@/db/posts";
 import SideMenu from "./SideMenu";
 
 import { useOnScreen } from "@/hooks/useOnScreen";
@@ -29,6 +30,9 @@ import { Like } from "@/db/schema";
 import { useSession } from "next-auth/react";
 import { useIntersection } from "@mantine/hooks";
 import PingContext from "./CommentContext";
+import { createId } from "@paralleldrive/cuid2";
+import { likePostAction, unlikePostAction } from "@/actions/actions";
+import { set } from "zod";
 interface Props {
   post: PostType;
   likesArr: Like[];
@@ -36,14 +40,33 @@ interface Props {
 
 const PostButtons: FC<Props> = ({ post, likesArr }) => {
   const user = useSession().data?.user;
-  const [liked, setLiked] = useState(
-    likesArr.find((l) => l.userId === user?.id) ? true : false
-  );
-  const [likes, setLikes] = useState(likesArr.length);
+
   const [saved, setSaved] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const [optomisticLikes, setLikes] = useState(likesArr);
+  const setOptomisticLikes = (like: {
+    id: string;
+    userId: string;
+    postId: string;
+    addLike: boolean;
+  }) => {
+    if (like.addLike) {
+      setLikes([
+        ...optomisticLikes,
+        { id: like.id, userId: like.userId, postId: like.postId },
+      ]);
+    } else {
+      let newState = [...optomisticLikes].filter(
+        (like) => like.userId !== user?.id
+      );
+      setLikes(newState);
+    }
+  };
+  console.log({ optomisticLikes });
+  const liked = optomisticLikes.find((l) => l.userId === user?.id)
+    ? true
+    : false;
   const { ref, entry } = useIntersection({
     root: containerRef.current,
     threshold: 1,
@@ -55,11 +78,11 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
         <SideMenu
           post={post}
           saved={saved}
-          likes={likes}
+          optomisticLikes={optomisticLikes}
+          setOptomisticLikes={setOptomisticLikes}
           liked={liked}
           isOnScreen={entry?.isIntersecting}
           setSaved={setSaved}
-          setLiked={setLiked}
         />
       )}
       <div
@@ -70,11 +93,10 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
           post={post}
           saved={saved}
           side="top"
-          likes={likes}
-          setLikes={setLikes}
+          optomisticLikes={optomisticLikes}
+          setOptomisticLikes={setOptomisticLikes}
           liked={liked}
           setSaved={setSaved}
-          setLiked={setLiked}
         />
       </div>
 
@@ -90,10 +112,9 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
               saved={saved}
               side="bottom"
               liked={liked}
-              likes={likes}
-              setLikes={setLikes}
+              optomisticLikes={optomisticLikes}
+              setOptomisticLikes={setOptomisticLikes}
               setSaved={setSaved}
-              setLiked={setLiked}
             />
           </div>
         ))}
@@ -105,24 +126,29 @@ interface PostButtonProps {
   post: PostType;
   saved: boolean;
   liked: boolean;
-  likes: number;
-  side?: "top" | "right" | "bottom" | "left";
-  setLikes: Dispatch<SetStateAction<number>>;
-  setSaved: Dispatch<SetStateAction<boolean>>;
 
-  setLiked: Dispatch<SetStateAction<boolean>>;
+  side?: "top" | "right" | "bottom" | "left";
+
+  setSaved: Dispatch<SetStateAction<boolean>>;
+  optomisticLikes: Like[];
+  setOptomisticLikes: (action: {
+    id: string;
+    userId: string;
+    postId: string;
+    addLike: boolean;
+  }) => void;
 }
 const PostButtonHeading: FC<PostButtonProps> = ({
   post,
-  likes,
   side,
   saved,
   liked,
   setSaved,
-  setLiked,
+  optomisticLikes,
+  setOptomisticLikes,
 }) => {
   const CommentContext = useContext(PingContext);
-  console.log({ CommentContext });
+
   const { ping, setPing } = CommentContext!;
 
   return (
@@ -205,9 +231,10 @@ const PostButtonHeading: FC<PostButtonProps> = ({
           )}
         </Button>
         <LikeButton
+          post={post}
           liked={liked}
-          setLiked={setLiked}
-          likes={likes}
+          optomisticLikes={optomisticLikes}
+          setOptomisticLikes={setOptomisticLikes}
           side={side}
         />
         {/* Like count */}
@@ -217,19 +244,27 @@ const PostButtonHeading: FC<PostButtonProps> = ({
 };
 
 type LikeButtonProps = {
+  optomisticLikes: Like[];
+  setOptomisticLikes: (action: {
+    id: string;
+    userId: string;
+    postId: string;
+    addLike: boolean;
+  }) => void;
+  post: PostType;
   liked: boolean;
-  setLiked: Dispatch<SetStateAction<boolean>>;
-  likes: number;
   side?: "top" | "right" | "bottom" | "left";
 };
 export const LikeButton: FC<LikeButtonProps> = ({
-  liked,
-  setLiked,
-  likes,
+  optomisticLikes,
+  setOptomisticLikes,
+  post,
   side,
+  liked,
 }) => {
+  const user = useSession().data?.user;
   const [showLikeCount, setShowLikeCount] = useState(false);
-
+  let [isPending, startTransition] = useTransition();
   useEffect(() => {
     console.log({ showLikeCount });
     const timer = setTimeout(() => {
@@ -247,13 +282,40 @@ export const LikeButton: FC<LikeButtonProps> = ({
         <Button
           size={"icon"}
           variant={"outline"}
+          disabled={isPending}
           className="bg-transparent"
           onClick={() => {
-            setShowLikeCount(true);
-            setLiked(!liked);
+            startTransition(async () => {
+              if (liked) {
+                setOptomisticLikes({
+                  id: optomisticLikes.find((l) => l.userId === user?.id)?.id!,
+                  userId: user?.id!,
+                  postId: post!.id,
+                  addLike: false,
+                });
+                await unlikePostAction({
+                  userId: user?.id!,
+                  postId: post!.id,
+                });
+              } else {
+                const newLike = {
+                  id: createId(),
+                  userId: user?.id!,
+                  postId: post!.id,
+                };
+                setOptomisticLikes({
+                  ...newLike,
+                  addLike: true,
+                });
+                await likePostAction(newLike);
+              }
+              setShowLikeCount(true);
+            });
           }}
         >
-          {liked ? (
+          {isPending ? (
+            <CircleDashed className="h-5 w-5 text-pink-500 animate-spin" />
+          ) : liked ? (
             <HeartFilledIcon
               className={cn(
                 "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all  spin-in-180 "
@@ -281,7 +343,7 @@ export const LikeButton: FC<LikeButtonProps> = ({
               : "text-stone-500 dark:text-stone-300"
           } h-9 aspect-square shadow-sm px-2 inline-flex items-center justify-center rounded-md border border-border transition-colors duration-300 ease-in-out  bg-background`}
         >
-          {liked ? likes + 1 : likes}
+          {optomisticLikes.length}
         </span>
       </PopoverContent>
     </Popover>

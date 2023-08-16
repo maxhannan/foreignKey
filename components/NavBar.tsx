@@ -32,7 +32,7 @@ const NavBar: FC<Props> = async ({}) => {
           <MobileMenu />
           <Link href={"/"} className="  ">
             <span
-              className={` font-semibold text-2xl  text-emerald-500  h-full  `}
+              className={` font-semibold text-xl  text-emerald-500  h-full  `}
             >
               foreign / key
             </span>

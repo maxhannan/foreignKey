@@ -141,6 +141,7 @@ export const likes = mysqlTable(
   })
 );
 export type Like = InferModel<typeof likes>;
+export type NewLike = InferModel<typeof likes, "insert">;
 export const comments = mysqlTable(
   "comments",
   {

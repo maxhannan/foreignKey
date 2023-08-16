@@ -5,7 +5,6 @@ interface Props {
 }
 
 const CommentSectionServer: FC<Props> = async ({ post }) => {
-  await new Promise((resolve) => setTimeout(resolve, 9000));
   return <div>CommentSectionServer</div>;
 };
 

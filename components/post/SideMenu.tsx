@@ -9,30 +9,37 @@ import {
   Share2Icon,
 } from "@radix-ui/react-icons";
 import { useContext, type Dispatch, type FC, type SetStateAction } from "react";
-import UserPopover from "./UserPopover";
-import UserPopoverServer from "./UserPopoverServer";
+
 import { cn } from "@/lib/utils";
 import { MessageCircleIcon, ShareIcon } from "lucide-react";
 import { LikeButton } from "./PostButtons";
 import PingContext from "./CommentContext";
+import { Like } from "@/db/schema";
 
 interface Props {
   post: PostType;
   saved: boolean;
   liked: boolean;
-  likes: number;
+
   setSaved: Dispatch<SetStateAction<boolean>>;
   isOnScreen: boolean;
-  setLiked: Dispatch<SetStateAction<boolean>>;
+  optomisticLikes: Like[];
+  setOptomisticLikes: (action: {
+    id: string;
+    userId: string;
+    postId: string;
+    addLike: boolean;
+  }) => void;
 }
 
 const SideMenu: FC<Props> = ({
   saved,
   liked,
   setSaved,
-  setLiked,
+  post,
   isOnScreen,
-  likes,
+  optomisticLikes,
+  setOptomisticLikes,
 }) => {
   const CommentContext = useContext(PingContext);
   console.log({ CommentContext });
@@ -114,7 +121,12 @@ const SideMenu: FC<Props> = ({
           <Share2Icon className="h-5 w-5 text-gray-500 dark:text-gray-300  animate-in zoom-in " />
         )}
       </Button>
-      <LikeButton liked={liked} setLiked={setLiked} side="left" likes={likes} />
+      <LikeButton
+        post={post}
+        liked={liked}
+        optomisticLikes={optomisticLikes}
+        setOptomisticLikes={setOptomisticLikes}
+      />
     </div>
   );
 };
