@@ -73,7 +73,7 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
     : false;
   const { ref, entry } = useIntersection({
     root: containerRef.current,
-    threshold: 1,
+    threshold: 0.2,
   });
   let isOnScreen = entry?.isIntersecting;
   return (
@@ -108,7 +108,7 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
         (entry && (
           <div
             className={cn(
-              "flex lg:hidden items-center gap-1 justify-between fixed top-14 left-0 w-full bg-background/90 backdrop-blur-xl z-50 p-3 animate-in fade-in-0  duration-300 px-4 border-t shadow-md  "
+              "flex lg:hidden items-center gap-1 justify-between fixed top-0 left-0 w-full bg-background/90 backdrop-blur-xl z-50 p-3 animate-in fade-in-0  duration-300 px-4 border-t shadow-md  "
             )}
           >
             <PostButtonHeading

@@ -13,7 +13,6 @@ export default function Layout({
   return (
     <main className="">
       <NavBar />
-      <div className="h-16"></div>
 
       <Suspense fallback={<LoadingSkeleton />}>
         {postPage}

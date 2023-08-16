@@ -26,7 +26,7 @@ const NavBar: FC<Props> = async ({}) => {
   const session = await getServerSession(authOptions);
 
   return (
-    <nav className="w-full min-h-14 h-14  bg-background shadow-sm flex fixed top-0 left-0  z-50 ">
+    <nav className="w-full min-h-14 h-14  bg-background shadow-sm flex   z-50 ">
       <div className="flex items-center justify-between  w-full   gap-2 px-2 xl:px-4">
         <div className="flex items-center gap-1 ">
           <MobileMenu />
