@@ -1,6 +1,3 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 import type { FC } from "react";
 
 import { getPostById } from "@/db/posts";

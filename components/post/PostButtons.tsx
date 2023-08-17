@@ -33,6 +33,7 @@ import PingContext from "./CommentContext";
 import { createId } from "@paralleldrive/cuid2";
 import { likePostAction, unlikePostAction } from "@/actions/actions";
 import { set } from "zod";
+import { useRouter } from "next/navigation";
 interface Props {
   post: PostType;
   likesArr: Like[];
@@ -279,6 +280,7 @@ export const LikeButton: FC<LikeButtonProps> = ({
       clearTimeout(timer);
     };
   }, [showLikeCount]);
+  const router = useRouter();
 
   return (
     <Popover open={showLikeCount}>
@@ -289,7 +291,7 @@ export const LikeButton: FC<LikeButtonProps> = ({
           disabled={isPending}
           className="bg-transparent"
           onClick={() => {
-            startTransition(async () => {
+            startTransition(() => {
               if (liked) {
                 setOptomisticLikes({
                   id: optomisticLikes.find((l) => l.userId === user?.id)?.id!,
@@ -297,7 +299,7 @@ export const LikeButton: FC<LikeButtonProps> = ({
                   postId: post!.id,
                   addLike: false,
                 });
-                await unlikePostAction({
+                unlikePostAction({
                   userId: user?.id!,
                   postId: post!.id,
                 });
@@ -311,7 +313,7 @@ export const LikeButton: FC<LikeButtonProps> = ({
                   ...newLike,
                   addLike: true,
                 });
-                await likePostAction(newLike);
+                likePostAction(newLike);
               }
               setShowLikeCount(true);
             });

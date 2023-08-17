@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 import { PostType } from "@/db/posts";
 
 import UserPopover from "./UserPopover";
