@@ -20,7 +20,7 @@ const PostPage: FC<Props> = async ({ post }) => {
   return (
     <div className="container mx-auto  max-w-[100vw] lg:max-w-[1200px] prose prose-stone dark:prose-invert mt-2  animate-in fade-in-0  duration-300 break-words mb-4 pb-16 px-4 lg:px-24">
       {/* fixed position vertical buttons */}
-      <LikeButton post={post} />
+      <PostHeading post={post} />
       <EditorOutput content={post.content} />
     </div>
   );

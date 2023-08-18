@@ -36,6 +36,7 @@ import { likePostAction, unlikePostAction } from "@/actions/actions";
 import { set } from "zod";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
+import LikeButton from "./LikeButton";
 interface Props {
   post: PostType;
   likesArr: Like[];
@@ -111,7 +112,7 @@ const PostButtons: FC<Props> = ({ post, likesArr }) => {
         (entry && (
           <div
             className={cn(
-              "flex lg:hidden items-center gap-1 justify-between fixed top-0 left-0 w-full bg-background/90 backdrop-blur-xl z-50 p-3 animate-in fade-in-0  duration-300 px-4 border-t shadow-md  "
+              "flex lg:hidden items-center gap-1 justify-between fixed top-0 left-0 w-full bg-background/90 backdrop-blur-xl z-[999] p-3 animate-in fade-in-0  duration-300 px-4 border-t shadow-md  "
             )}
           >
             <PostButtonHeading
@@ -237,130 +238,10 @@ const PostButtonHeading: FC<PostButtonProps> = ({
             <Share2Icon className="h-5 w-5 text-gray-500 dark:text-gray-300   zoom-in " />
           )}
         </Button>
-        <LikeButton
-          post={post}
-          liked={liked}
-          optomisticLikes={optomisticLikes}
-          setOptomisticLikes={setOptomisticLikes}
-          side={side}
-        />
+        <LikeButton post={post} side={side} />
         {/* Like count */}
       </div>
     </>
   );
 };
-
-type LikeButtonProps = {
-  optomisticLikes: Like[];
-  setOptomisticLikes: (action: {
-    id: string;
-    userId: string;
-    postId: string;
-    addLike: boolean;
-  }) => void;
-  post: PostType;
-  liked: boolean;
-  side?: "top" | "right" | "bottom" | "left";
-};
-export const LikeButton: FC<LikeButtonProps> = ({
-  optomisticLikes,
-  setOptomisticLikes,
-  post,
-  side,
-  liked,
-}) => {
-  const user = useSession().data?.user;
-  const [showLikeCount, setShowLikeCount] = useState(false);
-  let [isPending, startTransition] = useTransition();
-  useEffect(() => {
-    console.log({ showLikeCount });
-    const timer = setTimeout(() => {
-      console.log("showLikeCount");
-      setShowLikeCount(false);
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [showLikeCount]);
-
-  const { mutate: likePost } = useMutation({
-    mutationFn: async ({ postId, userId, liking }: LikeCreationRequest) => {
-      const body = { postId, userId, liking };
-      const res = await fetch(`/api/post/likes`, {
-        method: "PATCH",
-        body: JSON.stringify(body),
-      });
-      return res.json();
-    },
-    onSuccess: (data) => {
-      console.log({ data });
-      if (data.success) {
-        console.log("success");
-      }
-    },
-  });
-  return (
-    <form>
-      <Popover open={showLikeCount}>
-        <PopoverTrigger asChild>
-          <Button
-            size={"icon"}
-            variant={"outline"}
-            className="bg-transparent"
-            onClick={async () => {
-              if (liked) {
-                likePost;
-              } else {
-                const newLike = {
-                  id: createId(),
-                  userId: user?.id!,
-                  postId: post!.id,
-                };
-                setOptomisticLikes({
-                  ...newLike,
-                  addLike: true,
-                });
-
-                startTransition(() => {
-                  likePostAction(newLike);
-                });
-              }
-            }}
-          >
-            {liked ? (
-              <HeartFilledIcon
-                className={cn(
-                  "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all  spin-in-180 "
-                )}
-              />
-            ) : (
-              <HeartIcon
-                className={cn(
-                  " h-5 w-5 text-pink-500 dark:text-pink-400 transition-all  spin-in-180   "
-                )}
-              />
-            )}
-
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-fit p-0 border-none bg-transparent"
-          side={side}
-        >
-          <span
-            className={`${
-              liked
-                ? "text-pink-500 dark:text-pink-400"
-                : "text-stone-500 dark:text-stone-300"
-            } h-9 aspect-square shadow-sm px-2 inline-flex items-center justify-center rounded-md border border-border transition-colors duration-300 ease-in-out  bg-background`}
-          >
-            {optomisticLikes.length}
-          </span>
-        </PopoverContent>
-      </Popover>
-    </form>
-  );
-};
-
 export default PostButtons;

@@ -28,7 +28,7 @@ function PostHeading({ post }: Props) {
   console.log("likes", likes);
 
   return (
-    <div className="flex   gap-4 flex-col not-prose justify-between ">
+    <div className="flex   gap-4 flex-col not-prose justify-between relative ">
       <div className="flex gap-4 items-center">
         <div className="">
           <UserPopover post={post}>

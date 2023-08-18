@@ -12,9 +12,10 @@ import { useContext, type Dispatch, type FC, type SetStateAction } from "react";
 
 import { cn } from "@/lib/utils";
 import { MessageCircleIcon, ShareIcon } from "lucide-react";
-import { LikeButton } from "./PostButtons";
+
 import PingContext from "./CommentContext";
 import { Like } from "@/db/schema";
+import LikeButton from "./LikeButton";
 
 interface Props {
   post: PostType;
@@ -121,12 +122,7 @@ const SideMenu: FC<Props> = ({
           <Share2Icon className="h-5 w-5 text-gray-500 dark:text-gray-300  animate-in zoom-in " />
         )}
       </Button>
-      <LikeButton
-        post={post}
-        liked={liked}
-        optomisticLikes={optomisticLikes}
-        setOptomisticLikes={setOptomisticLikes}
-      />
+      <LikeButton post={post} side={"bottom"} />
     </div>
   );
 };

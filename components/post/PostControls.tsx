@@ -27,8 +27,6 @@ interface Props {
 }
 
 const PostControls: FC<Props> = ({ author, post }) => {
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(1234);
   const [saved, setSaved] = useState(false);
 
   return (

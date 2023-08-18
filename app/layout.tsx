@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${figtree.className}   `}>
+      <body className={`${figtree.className}  overflow-y-scroll `}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
             <main className="mx-2 md:mx-0 ">
