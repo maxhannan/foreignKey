@@ -1,5 +1,4 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+"use client";
 import { PostType } from "@/db/posts";
 
 import UserPopover from "./UserPopover";
@@ -16,13 +15,18 @@ import CommentContextProvider from "./CommentContextProvider";
 interface Props {
   post: PostType;
 }
-
-async function PostHeading({ post }: Props) {
-  if (!post) return null;
+export const revalidate = 0;
+const getData = async (postid: string) => {
   const likes = await db.query.likes.findMany({
-    where: (likes) => eq(likes.postId, post.id),
+    where: (likes) => eq(likes.postId, postid),
   });
-  console.log({ likes });
+  return likes;
+};
+function PostHeading({ post }: Props) {
+  if (!post) return null;
+  const likes = post.likes;
+  console.log("likes", likes);
+
   return (
     <div className="flex   gap-4 flex-col not-prose justify-between ">
       <div className="flex gap-4 items-center">

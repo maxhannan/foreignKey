@@ -15,14 +15,18 @@ import { SaveIcon } from "lucide-react";
 import { set } from "zod";
 import { cn } from "@/lib/utils";
 
+import { PostType } from "@/db/posts";
+import LikeButton from "./LikeButton";
+
 interface Props {
+  post: PostType;
   author: {
     name: string | null;
     image: string | null;
   };
 }
 
-const PostControls: FC<Props> = ({ author }) => {
+const PostControls: FC<Props> = ({ author, post }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(1234);
   const [saved, setSaved] = useState(false);
@@ -60,29 +64,7 @@ const PostControls: FC<Props> = ({ author }) => {
             <BookmarkIcon className="h-5 w-5 text-gray-500 dark:text-gray-300  animate-in zoom-in " />
           )}
         </Button>
-        <Button
-          size={"icon"}
-          variant={"ghost"}
-          onClick={() => {
-            setLiked(!liked);
-          }}
-        >
-          {liked ? (
-            <HeartFilledIcon
-              className={cn(
-                "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180 "
-              )}
-            />
-          ) : (
-            <HeartIcon
-              className={cn(
-                " h-5 w-5 text-pink-500 dark:text-pink-400 transition-all animate-in spin-in-180   "
-              )}
-            />
-          )}
-
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+        <LikeButton post={post} />
         {/* Like count */}
       </div>
     </div>

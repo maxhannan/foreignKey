@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from ".";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/lib/config";
 import { NewLike, likes } from "./schema";
@@ -13,6 +13,13 @@ export const getPostById = async (id: string) => {
           name: true,
           id: true,
           image: true,
+        },
+      },
+      likes: {
+        columns: {
+          id: true,
+          userId: true,
+          postId: true,
         },
       },
     },
@@ -36,6 +43,13 @@ export const getAllPostsPaginated = async ({
           id: true,
           name: true,
           image: true,
+        },
+      },
+      likes: {
+        columns: {
+          id: true,
+          userId: true,
+          postId: true,
         },
       },
     },
@@ -62,9 +76,9 @@ export const likePost = async (newLike: NewLike) => {
 
 export const unlikePost = async (postId: string, userId: string) => {
   try {
-    const like =
-      (await db.delete(likes).where(eq(likes.postId, postId))) &&
-      eq(likes.userId, userId);
+    const like = await db
+      .delete(likes)
+      .where(and(eq(likes.postId, postId), eq(likes.userId, userId)));
     return like;
   } catch (error) {
     console.error(error);

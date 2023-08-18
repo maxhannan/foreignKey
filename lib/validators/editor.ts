@@ -24,3 +24,11 @@ export const PostCreationRequestValidator = PostValidator.extend({
   featuredImageUrl: z.string().url(),
 });
 export type PostCreationRequest = z.infer<typeof PostCreationRequestValidator>;
+
+export const LikeValidator = z.object({
+  postId: z.string(),
+  userId: z.string(),
+  liking: z.boolean(),
+});
+
+export type LikeCreationRequest = z.infer<typeof LikeValidator>;

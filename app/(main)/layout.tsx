@@ -1,8 +1,7 @@
 import NavBar from "@/components/NavBar";
 import LoadingSkeleton from "../loadingSkeleton";
 import { Suspense } from "react";
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+
 export default function Layout({
   children,
   postPage,
@@ -14,10 +13,8 @@ export default function Layout({
     <main className="">
       <NavBar />
       <div className="h-2" />
-      <Suspense fallback={<LoadingSkeleton />}>
-        {postPage}
-        {children}
-      </Suspense>
+      {postPage}
+      <Suspense fallback={<LoadingSkeleton />}>{children}</Suspense>
     </main>
   );
 }

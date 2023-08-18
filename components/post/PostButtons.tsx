@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { LikeCreationRequest } from "@/lib/validators/editor";
 import { experimental_useOptimistic as useOptimistic } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,6 +35,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { likePostAction, unlikePostAction } from "@/actions/actions";
 import { set } from "zod";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 interface Props {
   post: PostType;
   likesArr: Like[];
@@ -280,29 +282,34 @@ export const LikeButton: FC<LikeButtonProps> = ({
       clearTimeout(timer);
     };
   }, [showLikeCount]);
-  const router = useRouter();
 
+  const { mutate: likePost } = useMutation({
+    mutationFn: async ({ postId, userId, liking }: LikeCreationRequest) => {
+      const body = { postId, userId, liking };
+      const res = await fetch(`/api/post/likes`, {
+        method: "PATCH",
+        body: JSON.stringify(body),
+      });
+      return res.json();
+    },
+    onSuccess: (data) => {
+      console.log({ data });
+      if (data.success) {
+        console.log("success");
+      }
+    },
+  });
   return (
-    <Popover open={showLikeCount}>
-      <PopoverTrigger asChild>
-        <Button
-          size={"icon"}
-          variant={"outline"}
-          disabled={isPending}
-          className="bg-transparent"
-          onClick={() => {
-            startTransition(() => {
+    <form>
+      <Popover open={showLikeCount}>
+        <PopoverTrigger asChild>
+          <Button
+            size={"icon"}
+            variant={"outline"}
+            className="bg-transparent"
+            onClick={async () => {
               if (liked) {
-                setOptomisticLikes({
-                  id: optomisticLikes.find((l) => l.userId === user?.id)?.id!,
-                  userId: user?.id!,
-                  postId: post!.id,
-                  addLike: false,
-                });
-                unlikePostAction({
-                  userId: user?.id!,
-                  postId: post!.id,
-                });
+                likePost;
               } else {
                 const newLike = {
                   id: createId(),
@@ -313,46 +320,46 @@ export const LikeButton: FC<LikeButtonProps> = ({
                   ...newLike,
                   addLike: true,
                 });
-                likePostAction(newLike);
-              }
-              setShowLikeCount(true);
-            });
-          }}
-        >
-          {isPending ? (
-            <CircleDashed className="h-5 w-5 text-pink-500 animate-spin" />
-          ) : liked ? (
-            <HeartFilledIcon
-              className={cn(
-                "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all  spin-in-180 "
-              )}
-            />
-          ) : (
-            <HeartIcon
-              className={cn(
-                " h-5 w-5 text-pink-500 dark:text-pink-400 transition-all  spin-in-180   "
-              )}
-            />
-          )}
 
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        className="w-fit p-0 border-none bg-transparent"
-        side={side}
-      >
-        <span
-          className={`${
-            liked
-              ? "text-pink-500 dark:text-pink-400"
-              : "text-stone-500 dark:text-stone-300"
-          } h-9 aspect-square shadow-sm px-2 inline-flex items-center justify-center rounded-md border border-border transition-colors duration-300 ease-in-out  bg-background`}
+                startTransition(() => {
+                  likePostAction(newLike);
+                });
+              }
+            }}
+          >
+            {liked ? (
+              <HeartFilledIcon
+                className={cn(
+                  "absolute h-5 w-5 text-pink-500 dark:text-pink-400 transition-all  spin-in-180 "
+                )}
+              />
+            ) : (
+              <HeartIcon
+                className={cn(
+                  " h-5 w-5 text-pink-500 dark:text-pink-400 transition-all  spin-in-180   "
+                )}
+              />
+            )}
+
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-fit p-0 border-none bg-transparent"
+          side={side}
         >
-          {optomisticLikes.length}
-        </span>
-      </PopoverContent>
-    </Popover>
+          <span
+            className={`${
+              liked
+                ? "text-pink-500 dark:text-pink-400"
+                : "text-stone-500 dark:text-stone-300"
+            } h-9 aspect-square shadow-sm px-2 inline-flex items-center justify-center rounded-md border border-border transition-colors duration-300 ease-in-out  bg-background`}
+          >
+            {optomisticLikes.length}
+          </span>
+        </PopoverContent>
+      </Popover>
+    </form>
   );
 };
 
