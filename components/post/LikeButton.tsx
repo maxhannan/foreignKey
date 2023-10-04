@@ -30,7 +30,7 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
 
   const [showLikeCount, setShowLikeCount] = useState(false);
   useEffect(() => {
-    queryClient.invalidateQueries(["likes", post?.id]);
+    queryClient.refetchQueries(["likes", post?.id]);
   }, []);
   useEffect(() => {
     const timer = setTimeout(() => {
