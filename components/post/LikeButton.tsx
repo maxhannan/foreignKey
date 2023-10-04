@@ -38,25 +38,17 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
       clearTimeout(timer);
     };
   }, [showLikeCount]);
-  const {
-    data: dblikes,
-    isRefetching,
-    isInitialLoading,
-  } = useQuery({
+  const { data, isInitialLoading } = useQuery({
     queryKey: ["likes", post?.id],
     queryFn: async () => {
-      console.log("fetching likes");
-      const data = await fetch(`/api/post/likes?postId=${post?.id}`, {
-        method: "GET",
-      }).then((res) => res.json());
-      console.log({ data });
+      const { data } = await axios.get(`/api/post/likes?postId=${post?.id}`);
+
       return data.dblikes as Like[];
     },
     onError: (err) => {
       console.log({ err });
     },
     onSuccess: (data) => {
-      console.log({ data });
       setLiked(data?.some((like) => like.userId === user?.id));
     },
   });
@@ -66,12 +58,10 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
       const body = { postId, userId, liking };
 
       const { data } = await axios.patch(`/api/post/likes`, body);
-      console.log({ data }, "mutation");
 
       return data;
     },
-    onSuccess: (data) => {
-      console.log({ data });
+    onSuccess: () => {
       queryClient.invalidateQueries(["likes", post?.id]);
     },
   });
@@ -121,7 +111,7 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
       </PopoverTrigger>
       <PopoverContent
         alignOffset={100}
-        className="w-fit p-0 border-none bg-transparent animate-in zoom-in-0 z-30"
+        className="w-fit p-0 border-none bg-transparent animate-in zoom-in-0 z-50"
         side={side}
       >
         <span
@@ -138,7 +128,9 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
               )}
             />
           ) : (
-            <span className="animate-in fade-in-0 duration-500">2.9k</span>
+            <span className="animate-in fade-in-0 duration-500">
+              {data ? data.length : 0}
+            </span>
           )}
         </span>
       </PopoverContent>

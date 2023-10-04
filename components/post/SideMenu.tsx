@@ -24,24 +24,9 @@ interface Props {
 
   setSaved: Dispatch<SetStateAction<boolean>>;
   isOnScreen: boolean;
-  optomisticLikes: Like[];
-  setOptomisticLikes: (action: {
-    id: string;
-    userId: string;
-    postId: string;
-    addLike: boolean;
-  }) => void;
 }
 
-const SideMenu: FC<Props> = ({
-  saved,
-  liked,
-  setSaved,
-  post,
-  isOnScreen,
-  optomisticLikes,
-  setOptomisticLikes,
-}) => {
+const SideMenu: FC<Props> = ({ saved, liked, setSaved, post, isOnScreen }) => {
   const CommentContext = useContext(PingContext);
   console.log({ CommentContext });
   const { ping, setPing } = CommentContext!;
