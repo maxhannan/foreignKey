@@ -13,7 +13,7 @@ import axios from "axios";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { set } from "zod";
 import React from "react";
-import { CircleDashed } from "lucide-react";
+import { CircleDashed, SplineIcon } from "lucide-react";
 
 interface Props {
   post: PostType;
@@ -24,14 +24,10 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
   const user = useSession().data?.user;
   const queryClient = useQueryClient();
 
-  const [liked, setLiked] = useState(
-    post?.likes.some((like) => like.userId === user?.id)
-  );
+  const [liked, setLiked] = useState(false);
 
   const [showLikeCount, setShowLikeCount] = useState(false);
-  useEffect(() => {
-    queryClient.refetchQueries(["likes", post?.id]);
-  }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       console.log("showLikeCount");
@@ -91,10 +87,8 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
           }}
         >
           {isInitialLoading ? (
-            <HeartIcon
-              className={cn(
-                " h-5 w-5 text-zinc-500 dark:text-pink-400 animate-in transition-all  zoom-in "
-              )}
+            <HeartFilledIcon
+              className={cn(" h-5 w-5 text-zinc-500  animate-pulse  ")}
             />
           ) : liked ? (
             <HeartFilledIcon
