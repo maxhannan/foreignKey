@@ -3,7 +3,7 @@ import { PostType } from "@/db/posts";
 import { LikeCreationRequest } from "@/lib/validators/editor";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useState, type FC, useEffect } from "react";
+import { useState, type FC, useEffect, use } from "react";
 import { Button } from "../ui/button";
 import { HeartFilledIcon, HeartIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
@@ -23,12 +23,15 @@ interface Props {
 const LikeButton: FC<Props> = ({ post, side = "top" }) => {
   const user = useSession().data?.user;
   const queryClient = useQueryClient();
+
   const [liked, setLiked] = useState(
     post?.likes.some((like) => like.userId === user?.id)
   );
 
   const [showLikeCount, setShowLikeCount] = useState(false);
-
+  useEffect(() => {
+    queryClient.invalidateQueries(["likes", post?.id]);
+  }, []);
   useEffect(() => {
     const timer = setTimeout(() => {
       console.log("showLikeCount");
@@ -38,6 +41,7 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
       clearTimeout(timer);
     };
   }, [showLikeCount]);
+
   const { data, isInitialLoading } = useQuery({
     queryKey: ["likes", post?.id],
     queryFn: async () => {
