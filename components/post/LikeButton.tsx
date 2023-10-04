@@ -7,13 +7,13 @@ import { useState, type FC, useEffect, use } from "react";
 import { Button } from "../ui/button";
 import { HeartFilledIcon, HeartIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+
 import { Like } from "@/db/schema";
 import axios from "axios";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { set } from "zod";
+
 import React from "react";
-import { CircleDashed, SplineIcon } from "lucide-react";
+import { CircleDashed } from "lucide-react";
 
 interface Props {
   post: PostType;
@@ -25,18 +25,7 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
   const queryClient = useQueryClient();
 
   const [liked, setLiked] = useState(false);
-
   const [showLikeCount, setShowLikeCount] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log("showLikeCount");
-      setShowLikeCount(false);
-    }, 2000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [showLikeCount]);
 
   const { data, isInitialLoading } = useQuery({
     queryKey: ["likes", post?.id],
@@ -66,6 +55,14 @@ const LikeButton: FC<Props> = ({ post, side = "top" }) => {
     },
   });
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLikeCount(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showLikeCount]);
   return (
     <Popover open={showLikeCount}>
       <PopoverTrigger asChild>

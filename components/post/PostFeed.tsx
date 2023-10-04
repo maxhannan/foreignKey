@@ -18,9 +18,9 @@ interface PostFeedProps {
 }
 
 const fetchPosts = async (page: number) => {
-  const data = await fetch(
+  const { data } = await axios.get(
     `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${page}}`
-  ).then((res) => res.json());
+  );
   return data as PostType[];
 };
 
